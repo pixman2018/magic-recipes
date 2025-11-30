@@ -1,0 +1,12 @@
+input[type='search'] {
+  -webkit-appearance: none;
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+.closeBtn svg {
+  top: 50%;
+  margin-top: -12px;
+  right: 1.5rem;
+}

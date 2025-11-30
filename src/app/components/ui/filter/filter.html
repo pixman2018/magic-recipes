@@ -1,0 +1,11 @@
+<div class="filter-container">
+  <label for="categoryCtrl" class="sr-only ">Kategorie</label>
+  <select id="categoryCtrl" (change)="onChangeCategory($event.target)" [(ngModel)]="selectedCategoryControl"
+    class="block py-2.5 px-4 w-full  text-body bg-transparent border-0 border-b-2 text-base
+    border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer text-white focus:text-white text-white/50">
+    <option value="" disabled selected hidden>Kategorie</option>
+    @for (recipiesCategory of recipiesCategories; let index = $index; track $index) {
+    <option [value]="recipiesCategory.en">{{ recipiesCategory.de }}</option>
+    }
+  </select>
+</div>

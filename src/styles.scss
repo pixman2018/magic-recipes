@@ -1,1 +1,121 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+
+// allows the user to manually switch to dark mode
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --text-tiny: 1.25rem;
+  --text-tiny--line-height: 1.725rem;
+  --text-tiny--letter-spacing: 0.125rem;
+  --text-tiny--font-weight: 500;
+
+  --color-mint-500: oklch(0.4 0.11 200);
+  --black-o-125: rgba(0, 0, 0, 0.125);
+  --color-blackGray: rgb(15, 15, 20);
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility flex-vCenter {
+  @apply flex items-center;
+}
+
+@utility flex-start-end {
+  @apply flex justify-between;
+}
+
+@layer components {
+  h1,
+  h2,
+  h3 {
+    @apply pb-2 text-lime-700;
+  }
+  h1 {
+    @apply text-4xl;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+  h3 {
+    font-size: 26px;
+  }
+
+  body {
+    @apply text-xl;
+  }
+
+  .container {
+    @apply max-w-[1600px] mx-auto;
+  }
+
+  .eleM {
+    @apply mt-16;
+  }
+
+  .li-odd {
+    @apply p-2 odd:bg-lime-700/10;
+  }
+
+  .btn {
+    @apply rounded-full border-4  py-2 px-4 w-[100%] cursor-pointer;
+    &.btn-primary {
+      @apply border-solid  border-lime-700/20 bg-lime-700/40;
+    }
+  }
+
+  .clip {
+    @apply border-1  rounded-full p-3 text-center mr-2;
+    &.clip-primary {
+      @apply border-lime-700 bg-lime-700/50;
+    }
+  }
+
+  .searchControl {
+    @apply my-2 placeholder-white/50 placeholder:text-base w-[100%] bg-transparent ml-[-1.0rem] px-[2.5rem]  py-2 border-solid border-b-white/50 border-b-2 text-white focus:outline-lime-700/20 focus:text-white focus:border-b-white;
+  }
+
+  #mainnav {
+    @apply flex flex-col;
+  }
+  .mainnav-list-container {
+    @apply flex flex-col sm:flex-row mt-2 sm:mt-0;
+  }
+  .mainnav-list-item {
+    @apply sm:not-last-of-type:mr-5 px-4 sm:px-0 not-last-of-type:pr-4 border-1 sm:border-0 border-slate-700  py-3 hover:bg-slate-800 focus:bg-slate-800 leading-8;
+  }
+  .mainnav-list-link {
+    @apply text-white/50  sm:rounded-xl;
+  }
+  .mainnav-list-icons-btn {
+    @apply self-end  cursor-pointer;
+  }
+
+  .recipe-card {
+    @apply bg-lime-700/40 m-0 border-4 border-solid border-t-0 sm:w-[275px] cursor-pointer;
+    border-image: linear-gradient(
+        to top,
+        color-mix(in srgb, var(--color-lime-700) 40%, transparent),
+        rgba(0, 0, 0, 0)
+      )
+      1;
+
+    figcaption {
+      @apply text-black text-base   px-2 py-2;
+    }
+  }
+
+  .info-box {
+    @apply p-4;
+    h4 {
+      @apply text-center mb-2 font-bold;
+    }
+  }
+  .working-hours {
+    @apply w-[100px] flex  items-center;
+    svg {
+      @apply mr-2 fill-lime-700;
+    }
+  }
+}

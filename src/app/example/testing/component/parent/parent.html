@@ -1,0 +1,7 @@
+<div class="container">
+  <h1>{{ title() }}</h1>
+
+  <button (click)="onChanceModel()"> I'm a Admin</button>
+
+  <app-child2 [(role)]="isAdmin" [headline]="headline"></app-child2>
+</div>

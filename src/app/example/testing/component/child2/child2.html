@@ -1,0 +1,9 @@
+<h1>{{headline()}}</h1>
+
+@if (role()) {
+<h2>Admin</h2>
+<button (click)="onChance()">Chance</button>
+}
+@else {
+<h2>Client</h2>
+}

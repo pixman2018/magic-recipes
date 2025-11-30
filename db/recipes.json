@@ -1,0 +1,629 @@
+{
+  "recipes": [
+    {
+      "id": "1",
+      "title": "Smoothie-Bowl mit Beeren",
+      "text": "Diese Smoothie-Bowl macht nicht nur optisch und geschmacklich was her, sondern sättigt dich durch die Haferflocken, das Obst und den Joghurt auch lange. Das perfekte ausgewogene Frühstück!",
+      "image": "https://baconmockup.com/1680/1200",
+      "LevelOfDifficulty": 1,
+      "nutritionalValues": {
+        "calories": 443,
+        "protein": 15.76,
+        "carbohydrates": 14.81,
+        "fat": 32.94,
+        "dietaryFiber": 0
+      },
+      "like": false,
+      "rating": 0,
+      "cookingTime": 15,
+      "preparationTime": 15,
+      "totalTime": 30,
+      "servingSize": 1,
+      "ingredients": [
+        {
+          "unit": 80,
+          "weight": "g",
+          "ingredient": "Heidelbeere(n)",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Banane(n)",
+          "isExist": false
+        },
+        {
+          "unit": 200,
+          "weight": "g",
+          "ingredient": "Naturjoghurt",
+          "isExist": false
+        },
+        {
+          "unit": 10,
+          "weight": "g",
+          "ingredient": "Mandeln",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Tl",
+          "ingredient": "Ahornsirup",
+          "isExist": false
+        },
+        {
+          "unit": 2,
+          "weight": "El",
+          "ingredient": "Haferflocken",
+          "isExist": false
+        }
+      ],
+      "steps": [
+        "Joghurt, Beeren (es müssen keine Heidelbeeren sein, nimm was du magst oder gerade da hast, am besten TK), die Hälfte der Banane und die Haferflocken mit dem Stabmixer oder Standmixer feinpürieren. Nach Belieben mit Ahornsirup süßen.",
+        "Masse in Müslischale geben, mit frischen Beeren und der restlichen Banane toppen, Mandeln hacken und ebenfalls auf die Bowl geben. "
+      ],
+      "categories": [
+        "Frühstück"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Gelbes Thai-Curry mit Tofu",
+      "text": "Currys sind super fix in der Zubereitung und schmecken einfach immer. Das Gemüse lässt sich beliebig variieren und wer noch ein paar Carbs möchte, kocht einfach Reis dazu. ",
+      "image": "https://baconmockup.com/1680/1200",
+      "LevelOfDifficulty": 1,
+      "nutritionalValues": {
+        "calories": 419,
+        "protein": 14.34,
+        "carbohydrates": 53.15,
+        "fat": 14.88,
+        "dietaryFiber": 0
+      },
+      "like": false,
+      "rating": 0,
+      "cookingTime": 0,
+      "preparationTime": 5,
+      "totalTime": 5,
+      "servingSize": 1,
+      "ingredients": [
+        {
+          "unit": 75,
+          "weight": "g",
+          "ingredient": "Tofu (natur)",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Zucchini(s)",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Handvoll",
+          "ingredient": "Baby-Spinat",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Paprika",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Zwiebel(n)",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "mittelgroße(s)",
+          "ingredient": " Karotte(n)",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Zehe",
+          "ingredient": "Knoblauch",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "cm",
+          "ingredient": "Ingwer",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Tl",
+          "ingredient": "Kokosöl",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Tl",
+          "ingredient": "Gelbe Curry-Paste",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "Dose",
+          "ingredient": "Kokosmilch, light",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "Tl",
+          "ingredient": "Currypulver",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "El",
+          "ingredient": "Sojasouce",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "El",
+          "ingredient": "Sambal Oelek",
+          "isExist": false
+        },
+        {
+          "unit": 0.25,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Limette(n)",
+          "isExist": false
+        }
+      ],
+      "steps": [
+        "Tofu so gut es geht mit einem Handtuch oder ein paar Blättern Küchenrolle auspressen, dann würfeln sowie salzen und pfeffern. ",
+        "Zucchini in Scheiben (oder gern auch mundgerechte Würfel) schneiden. Paprika entkernen und grob würfeln. Karotte schälen und in Scheiben schneiden. Spinat waschen, lange Stile entfernen. Zwiebel, Knoblauch und Ingwer schälen und fein hacken. ",
+        "Kokosöl in einer großen Pfanne erhitzen und Tofu von allen Seiten anbraten. Aus der Pfanne nehmen und beiseite stellen. ",
+        "Zwiebel, Knoblauch und Ingwer in die gleiche Pfanne geben und kurz braten. Von der Kokosmilch 1 TL des festeren Teils, der sich oben absetzt mit der (gelben) Currypaste zusammen mit dazu geben und kurz anbraten. Nach 3 Minuten die restliche Kokosmilch sowie die Sojasoße hinzugießen. Mit Curry würzen. Mit einem Schuss Gemüsebrühe eventuell etwas auffüllen, falls dein Gemüse nicht gut genug bedeckt ist. ",
+        "Das Gemüse (bis auf den Spinat) unterheben und etwa 10 Minuten köcheln lassen, sodass es weich ist, aber ruhig noch etwas Biss hat. Dann erst den Spinat unterheben, der sofort in sich zusammenfallen wird. ",
+        "Tofu nun ganz am Ende dazu geben und Curry mit Sojasoße und Limette abschmecken. Optional mit Sambal Oelek würzen. "
+      ],
+      "categories": [
+        "Abendessen",
+        "Mittagessen"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Spinat-Thunfisch-Salat",
+      "text": "In diesem Spinat-Thunfisch-Salat stecken jede Menge Protein und viele Antioxidantien ",
+      "image": "https://baconmockup.com/1280/720",
+      "LevelOfDifficulty": 1,
+      "nutritionalValues": {
+        "calories": 244,
+        "protein": 20.84,
+        "carbohydrates": 9.15,
+        "fat": 13.35,
+        "dietaryFiber": 0
+      },
+      "like": false,
+      "rating": 0,
+      "cookingTime": 0,
+      "preparationTime": 25,
+      "totalTime": 25,
+      "servingSize": 1,
+      "ingredients": [
+        {
+          "unit": 0.5,
+          "weight": "Dose",
+          "ingredient": "Dose Thunfisch im eigenen Saft",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Paprika",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Handvoll",
+          "ingredient": "Baby-Spinat",
+          "isExist": false
+        },
+        {
+          "unit": 6,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Cocktailtomate(n)",
+          "isExist": false
+        },
+        {
+          "unit": 5,
+          "weight": "Stück",
+          "ingredient": "schwarze Oliven",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "mittelgroße(s)",
+          "ingredient": "rote Zwiebel",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "El",
+          "ingredient": "Petersilie",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "El",
+          "ingredient": "Olivenöl",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Tl",
+          "ingredient": "Zitronensaft",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "Tl",
+          "ingredient": "Senf",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Zehe",
+          "ingredient": "Knoblauch",
+          "isExist": false
+        }
+      ],
+      "steps": [
+        "Spinat waschen und trocken schleudern.",
+        "Paprika in Streifen schneiden, Tomaten halbieren und Zwiebel in Ringe schneiden.",
+        "Thunfisch und Oliven abtropfen lassen und Petersilie klein hacken. Thunfisch, Paprika, Tomaten, Oliven, Zwiebelund Petersilie in einer Schüssel vermengen.",
+        "Für das Dressing, Öl mit Zironensaft, Senf und gepresstem Knoblauch verrühren und darüber gießen. Alles gut mischen. Anschließend die Spinatblätter unterheben und mit Petersilie bestreuen."
+      ],
+      "categories": [
+        "Salat",
+        "Mittagessen",
+        "Hauptgericht",
+        "Abendessen",
+        "Für unterwegs"
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Hähnchen-Brokkoli-Auflauf",
+      "text": "Hähnchen-Brokkoli-Auflauf ist ein einfacher Low Carb Auflauf mit Hähnchenfleisch, Brokkoli und cremiger Sauce.",
+      "image": "https://baconmockup.com/1680/1200",
+      "LevelOfDifficulty": 1,
+      "nutritionalValues": {
+        "calories": 665,
+        "protein": 61,
+        "carbohydrates": 13,
+        "fat": 39,
+        "dietaryFiber": 0
+      },
+      "like": false,
+      "rating": 0,
+      "cookingTime": 20,
+      "preparationTime": 20,
+      "totalTime": 40,
+      "servingSize": 1,
+      "ingredients": [
+        {
+          "unit": 200,
+          "weight": "g",
+          "ingredient": "Hähnchenbrustfilet",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Zwiebel(n)",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Stück",
+          "ingredient": "Knoblauch",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "Kopf(2)",
+          "ingredient": "Brokoli",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "El",
+          "ingredient": "Rapsöl",
+          "isExist": false
+        },
+        {
+          "unit": 100,
+          "weight": "ml",
+          "ingredient": "Hühnerbrühe",
+          "isExist": false
+        },
+        {
+          "unit": 100,
+          "weight": "g",
+          "ingredient": "Frischkäse Kräuter",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Prise",
+          "ingredient": "Salz",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Prise",
+          "ingredient": "Pfeffer",
+          "isExist": false
+        },
+        {
+          "unit": 50,
+          "weight": "g",
+          "ingredient": "geriebenen Käse",
+          "isExist": false
+        }
+      ],
+      "steps": [
+        "Hähnchen klein würfeln. Zwiebel und Knoblauch klein hacken. Brokkoli in Röschen schneiden. Die Röschen in einem Topf mit kochendem, gesalzenem Wasser für 2 Minuten blanchieren. Dann in Eiswasser kalt abschrecken.",
+        "Öl in einer Pfanne erhitzen und das Hähnchen von allen Seiten anbraten. Zwiebeln und Knoblauch zugeben und kurz mitbraten. Brühe und Frischkäse unterheben. Alles einmal aufkochen, dann bei mittlerer Hitze 3 Minuten köcheln lassen. Die Sauce mit Salz und Pfeffer würzen und den Brokkoli unterheben.",
+        "Backofen auf 180 Grad Ober- und Unterhitze vorheizen.",
+        "Alles in eine Auflaufform geben, mit Käse bestreuen und 20 Minuten backen."
+      ],
+      "categories": [
+        "Mittagessen",
+        "Hauptgericht",
+        "Abendessen"
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Griechische Hähnchen-Gyros-Pfanne",
+      "text": "Diese herzhafte und proteinreiche Gyros-Interpretation ist schnell und leicht gemacht. ",
+      "image": "recipes/greek_chicken_gyros_pan.jpg",
+      "LevelOfDifficulty": 1,
+      "nutritionalValues": {
+        "calories": 655,
+        "protein": 44.22,
+        "carbohydrates": 52.81,
+        "fat": 28.14,
+        "dietaryFiber": 0
+      },
+      "like": false,
+      "rating": 0,
+      "cookingTime": 20,
+      "preparationTime": 10,
+      "totalTime": 30,
+      "servingSize": 1,
+      "ingredients": [
+        {
+          "unit": 120,
+          "weight": "g",
+          "ingredient": "Hähnchenbrustfilet",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Zwiebel(n)",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Stück",
+          "ingredient": "Knoblauch",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Zucchini(s)",
+          "isExist": false
+        },
+        {
+          "unit": 2,
+          "weight": "Stück",
+          "ingredient": "getrocknete Tomaten",
+          "isExist": false
+        },
+        {
+          "unit": 50,
+          "weight": "g",
+          "ingredient": "Kirschtomaten",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Zweig",
+          "ingredient": "Petersilie",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "El",
+          "ingredient": "Olivenöl",
+          "isExist": false
+        },
+        {
+          "unit": 0.25,
+          "weight": "Tl",
+          "ingredient": "Oregano",
+          "isExist": false
+        },
+        {
+          "unit": 0.13,
+          "weight": "Tl",
+          "ingredient": "Tymian",
+          "isExist": false
+        },
+        {
+          "unit": 0.25,
+          "weight": "Tl",
+          "ingredient": "Paprikapulver",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Prise",
+          "ingredient": "Salz",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Prise",
+          "ingredient": "Pfeffer",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "El",
+          "ingredient": "Balsamico-Essig",
+          "isExist": false
+        },
+        {
+          "unit": 20,
+          "weight": "g",
+          "ingredient": "Grüne Olive(n)",
+          "isExist": false
+        },
+        {
+          "unit": 60,
+          "weight": "g",
+          "ingredient": "Orzo (Kritharaki)",
+          "isExist": false
+        },
+        {
+          "unit": 50,
+          "weight": "ml",
+          "ingredient": "Wasser",
+          "isExist": false
+        },
+        {
+          "unit": 37.5,
+          "weight": "g",
+          "ingredient": "Feta",
+          "isExist": false
+        }
+      ],
+      "steps": [
+        "Hähnchen unter kaltem Wasser abspülen, trocken tupfen und in Streifen schneiden. Knoblauchzehen schälen und fein hacken oder pressen. Gemüse waschen. Zwiebel in Halbringe oder kleine Würfel hacken, je nach Belieben. Eine Hälfte beiseite legen. Zucchini in dünne Scheiben schneiden. Die getrockneten Tomaten abtropfen lassen, trocken tupfen und fein schneiden.",
+        "Kirschtomaten halbieren, mit frischer gehackter Petersilie und einer Hälfte der restlichen roten Zwiebel vermengen, mit Salz und Pfeffer würzen, beiseite stellen.",
+        "In einer Pfanne Olivenöl erhitzen. Huhn darin anbraten, mit getrockneten Kräutern, Salz, Pfeffer und Paprika würzen, bis es durchgegart ist. Mit Balsamico-Essig ablöschen. Dann den Knoblauch unterrühren, eine weitere Minute kochen. Das Huhn aus der Pfanne nehmen und beiseite stellen.",
+        "In die gleiche Pfanne die Zucchini und getrocknete Tomaten hinzufügen. Etwa 3-4 Minuten weichdünsten lassen. Orzo und Wasser hinzufügen und mit Salz und Pfeffer würzen. Unter Rühren köcheln lassen, bis fast das gesamte Wasser verdunstet ist (etwa 10 Minuten). Hähnchen und Oliven zum Orzo geben und alles gut verrühren, 3 Minuten durchwärmen lassen.",
+        "Zum Servieren die Kirschtomaten über die Hähnchen-Orzo-Pfanne geben und den Feta rüberbröseln, fertig. Optional mit Tzatziki servieren."
+      ],
+      "categories": [
+        "Mittagessen",
+        "Hauptgericht",
+        "Abendessen"
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Keto-Pfanne mit Hühnchen",
+      "text": "Fixes Futter fürs Sixpack: Um deine Bauchmuskeln freizulegen, empfiehlt es sich Low Carb zu essen, vor allem an trainingsfreien Tagen.",
+      "image": "recipes/greek_chicken_gyros_pan.jpg",
+      "LevelOfDifficulty": 1,
+      "nutritionalValues": {
+        "calories": 284,
+        "protein": 33.8,
+        "carbohydrates": 13.34,
+        "fat": 10.29,
+        "dietaryFiber": 0
+      },
+      "like": false,
+      "rating": 0,
+      "cookingTime": 15,
+      "preparationTime": 10,
+      "totalTime": 25,
+      "servingSize": 1,
+      "ingredients": [
+        {
+          "unit": 120,
+          "weight": "g",
+          "ingredient": "Hähnchenbrustfilet",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "mittelgroße(s)",
+          "ingredient": "Paprika",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "Bund",
+          "ingredient": "Frühlingszwiebel(n)",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Prise",
+          "ingredient": "Salz",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Prise",
+          "ingredient": "Pfeffer",
+          "isExist": false
+        },
+        {
+          "unit": 0.5,
+          "weight": "Zehe",
+          "ingredient": "Knoblauch",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "Tl",
+          "ingredient": "Rapsöl",
+          "isExist": false
+        },
+        {
+          "unit": 50,
+          "weight": "g",
+          "ingredient": "Brechbohnen",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "El",
+          "ingredient": "Sojasouce",
+          "isExist": false
+        },
+        {
+          "unit": 1,
+          "weight": "El",
+          "ingredient": "Teriyaki-Sauce",
+          "isExist": false
+        },
+        {
+          "unit": 0.25,
+          "weight": "Tl",
+          "ingredient": "Sesam",
+          "isExist": false
+        }
+      ],
+      "steps": [
+        "Hühnchen in mundgerechte Stücke schneiden, salzen und pfeffern.",
+        "Zwiebel in Halbringe, Paprika in Streifen, Frühlingszwiebel in Ringe schneiden, Knobi pressen. Bohnen abtropfen lassen oder TK-Bohnen verwenden.",
+        "Öl in einer beschichteten Pfanne erhitzen, Huhn darin rundherum anbraten. Dann aus der Pfanne nehmen und beiseite stellen.",
+        "In dieselbe Pfanne nun Zwiebeln und Paprika geben, und unter Rühren anbraten. Knobi und Frühlingszwiebel später dazu, dann auch wieder das Fleisch hinzufügen und alles unterheben. Mit Salz, Pfeffer, sowie Soja- und Teriyakisauce abschmecken. ",
+        "Wer mag gibt noch ein wenig Sambal Oelek oder Chiliflocken dazu. Sesam kommt als finales Topping aufs Essen."
+      ],
+      "categories": [
+        "Mittagessen",
+        "Hauptgericht",
+        "Abendessen"
+      ]
+    }
+  ]
+}
