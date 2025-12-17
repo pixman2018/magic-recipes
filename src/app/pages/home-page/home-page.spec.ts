@@ -4,39 +4,45 @@ import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
 import { RecipeStore } from '../../services/recipesStore/recipe-store';
 import { of } from 'rxjs';
 import { RECIPES } from '../../../test/data';
+import { I_Recipe } from '../../models/recipe';
+import { ActivatedRoute } from '@angular/router';
 
-// describe('HomePage (Zone-less)', () => {
-// let component: HomePage;
-// let fixture: ComponentFixture<HomePage>;
-// let el: DebugElement;
-// let recipeServiceSpy: jasmine.SpyObj<RecipeService>;
-// beforeEach(async () => {
-//   recipeServiceSpy = jasmine.createSpyObj('RecipeService', ['getAllRecipes']);
-//   recipeServiceSpy.getAllRecipes.and.returnValue(of(RECIPES));
-//   await TestBed.configureTestingModule({
-//     imports: [HomePage],
-//     providers: [
-//       provideZonelessChangeDetection(),
-//       { provide: RecipeService, useValue: recipeServiceSpy },
-//     ],
-//   }).compileComponents();
-//   fixture = TestBed.createComponent(HomePage);
-//   component = fixture.componentInstance;
-//   el = fixture.debugElement;
-//   // **Service set before detectChanges**
-//   (component as any)['_recipeService'] = recipeServiceSpy;
-//   fixture.detectChanges(); // call ngOnInit()
-// });
-// it('should create HomePage', () => {
-//   expect(component).toBeTruthy();
-// });
-// it('should call private _getAllRecipes(), set recipes', () => {
-//   // Private Methode explizit aufrufen
-//   (component as any)._getAllRecipes();
-//   expect(component.recipes).toEqual(RECIPES, 'Recipes not found');
-//   expect(component.recipes.length).toBeGreaterThan(0, 'The request length is 0.');
-//   const firstRecipe = component.recipes.at(0);
-//   expect(firstRecipe?.id).toBe('1', 'ID from the first recipe is not 1');
-//   expect(recipeServiceSpy.getAllRecipes).toHaveBeenCalled();
-// });
-// });
+describe('HomePage', () => {
+  let component: HomePage;
+  let fixture: ComponentFixture<HomePage>;
+  let recipeServiceSpy: jasmine.SpyObj<RecipeStore>;
+
+  const mockRecipes: I_Recipe[] = RECIPES;
+
+  beforeEach(async () => {
+    // recipeServiceSpy = jasmine.createSpyObj('RecipeService', ['_fetchAllRecipes']);
+    recipeServiceSpy = jasmine.createSpyObj('RecipeStore', [], {
+      getRecipes$: of(mockRecipes),
+    });
+
+    await TestBed.configureTestingModule({
+      imports: [HomePage],
+      providers: [
+        provideZonelessChangeDetection(),
+        { provide: RecipeStore, useValue: recipeServiceSpy },
+        { provide: ActivatedRoute, useValue: {} },
+      ],
+    }).compileComponents();
+    fixture = TestBed.createComponent(HomePage);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
+  });
+
+  it('should load recipes from RecipeStore on creation', () => {
+    expect(component).toBeTruthy();
+  });
+  it('should call private _getAllRecipes(), set recipes', (done) => {
+    component['recipes$'].subscribe((recipes) => {
+      expect(recipes).toEqual(mockRecipes);
+      expect(recipes.length).toBe(5);
+      expect(recipes[0].id).toBe('1');
+      done();
+    });
+  });
+});

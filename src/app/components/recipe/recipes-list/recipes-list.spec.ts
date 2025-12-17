@@ -1,61 +1,58 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecipesList } from './recipes-list';
-import { Component, input, provideZonelessChangeDetection, signal } from '@angular/core';
+import {
+  Component,
+  input,
+  InputSignal,
+  provideZonelessChangeDetection,
+  signal,
+} from '@angular/core';
 
 import { RECIPES } from '../../../../test/data';
 import { I_Recipe } from '../../../models/recipe';
+import { Observable, of } from 'rxjs';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
-// Parent-Komponente simuliert Input
-@Component({
-  selector: 'app-host',
-  template: `<app-recipes-list [recipes]="recipes"></app-recipes-list>`,
-  standalone: true,
-  imports: [RecipesList],
-})
-class HostComponent {
-  recipes: I_Recipe[] = [];
-}
+describe('RecipesList', () => {
+  let component: RecipesList;
+  let fixture: ComponentFixture<RecipesList>;
 
-// describe('RecipesList', () => {
-//   let component: RecipesList;
-//   let fixture: ComponentFixture<HostComponent>;
+  const mockRecipes: I_Recipe[] = RECIPES;
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       imports: [RecipesList],
-//       providers: [provideZonelessChangeDetection()],
-//     }).compileComponents();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RecipesList],
+      providers: [provideZonelessChangeDetection(), { provide: ActivatedRoute, useValue: {} }],
+    }).compileComponents();
 
-// fixture = TestBed.createComponent(RecipesList);
-// component = fixture.componentInstance;
+    fixture = TestBed.createComponent(RecipesList);
+    component = fixture.componentInstance;
 
-//   fixture = TestBed.createComponent(HostComponent);
-//   fixture.componentInstance.recipes = RECIPES;
+    // set input
+    component.recipes$ = signal(of(mockRecipes)) as any; // 'as any' nur für Test
+    component.headline = signal('Test recipe') as any;
 
-//   fixture.detectChanges();
-// });
+    fixture.detectChanges();
+  });
 
-// it('should create RecipesList component', () => {
-//   const recipesListDE = fixture.debugElement.query(
-//     (d) => d.componentInstance instanceof RecipesList
-//   );
-//   const recipesList = recipesListDE.componentInstance;
-//   expect(recipesList).toBeTruthy();
-// });
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
+  });
 
-// it('should render recipes from input', () => {
-//   const recipesListDE = fixture.debugElement.query(
-//     (d) => d.componentInstance instanceof RecipesList
-//   );
-//   const recipesList = recipesListDE.componentInstance;
+  it('should display the headline', () => {
+    const headlineEl = fixture.debugElement.query(By.css('h3'));
+    expect(headlineEl).toBeTruthy();
+    expect(headlineEl.nativeElement.textContent).toContain('Test recipe');
+  });
 
-//   // Prüfen, dass das Signal die Rezepte enthält
-//   expect(recipesList.recipes()).toEqual(RECIPES);
-
-//   // Prüfen, ob die Namen im DOM gerendert werden
-//   const compiled = recipesListDE.nativeElement as HTMLElement;
-//   expect(compiled.textContent).toContain('Recipe 1');
-//   expect(compiled.textContent).toContain('Recipe 2');
-// });
-// });
+  it('should display the recipes', (done) => {
+    component.recipes$().subscribe((recipes) => {
+      expect(recipes.length).toBe(5);
+      expect(recipes[0].title).toBe('Smoothie-Bowl mit Beeren');
+      expect(recipes[1].title).toBe('Gelbes Thai-Curry mit Tofu');
+      done();
+    });
+  });
+});

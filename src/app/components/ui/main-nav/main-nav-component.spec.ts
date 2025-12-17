@@ -3,7 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MainNavComponent } from './main-nav-component';
 import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { provideRouter, RouterLink, RouterModule } from '@angular/router';
+import { provideRouter, RouterLink } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MainNavComponent', () => {
   let component: MainNavComponent;
@@ -12,7 +13,7 @@ describe('MainNavComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MainNavComponent, RouterLink, RouterModule],
+      imports: [MainNavComponent, RouterLink],
       providers: [provideZonelessChangeDetection(), provideRouter([])],
     }).compileComponents();
 
@@ -70,10 +71,8 @@ describe('MainNavComponent', () => {
   it('should emit handleShowSearch when clicking on "Rezepte"', () => {
     const emittedValues: any[] = [];
     component.handleShowSearch.subscribe((value) => emittedValues.push(value));
-
-    const link = fixture.debugElement.query(By.css('a[routerLink="recipes"]'));
+    const link = fixture.debugElement.query(By.css('a[routerLink="recipesList"]'));
     link.triggerEventHandler('click', new Event('click'));
-
     expect(emittedValues.length).toBe(1);
     expect(emittedValues[0]).toEqual({
       showSearchbar: true,

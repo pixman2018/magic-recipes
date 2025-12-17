@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { tickAsync } from '../../../../test/tick-async';
 
-fdescribe('SearchBarComponent', () => {
+describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
   let fixture: ComponentFixture<SearchBarComponent>;
   let el: DebugElement;
