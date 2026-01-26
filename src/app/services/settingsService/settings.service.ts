@@ -1,7 +1,7 @@
 import { computed, Injectable, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { VERSION } from '@angular/core';
 import { version } from '../../../../package.json';
-import { I_Settings } from '../../models/settings';
+import { I_Settings } from '../../models/settings.model';
 /**
  *
  * The SettingService provides global methods for configuring the page. The results are stored in Signal and localStorage.

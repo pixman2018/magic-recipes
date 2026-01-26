@@ -1,0 +1,85 @@
+<div class="form-container">
+  <form id="ingredientForm">
+    <div class="grid-container">
+      <div class="ingredient-text">
+        Bitte alle Angaben in 100g eintragen.
+      </div>
+      <div class="form-control row-50">
+        <label for="ingredient" class="">
+          Zutat
+          <input [field]="indredientForm.ingredient" type="text" id="ingredient" placeholder="Zutat"
+            class="formControl disabled" />
+        </label>
+        <lib-error-message [control]="indredientForm.ingredient" />
+      </div>
+
+      <div class="form-control row-50">
+        <label for="calories" class="">
+          Kalorien (kcal)
+          <input [field]="indredientForm.calories" type="number" id="calories" placeholder="Kalorien (kcal)"
+            class="formControl" />
+        </label>
+        <lib-error-message [control]="indredientForm.calories" />
+      </div>
+    </div>
+
+    <div class="grid-container">
+      <div class="form-control row-50">
+        <label for="protein" class="">
+          Protein
+          <input [field]="indredientForm.protein" type="number" id="protein" placeholder="Protein"
+            class="formControl" />
+        </label>
+        <lib-error-message [control]="indredientForm.protein" />
+      </div>
+
+      <div class="form-control row-50">
+        <label for="carbohydrates" class="">
+          Kohlenhydrate
+          <input [field]="indredientForm.carbohydrates" type="number" id="carbohydrates" placeholder="Kohlenhydrate"
+            class="formControl" />
+        </label>
+        <lib-error-message [control]="indredientForm.carbohydrates" />
+      </div>
+
+
+    </div>
+
+    <div class="grid-container">
+      <div class="form-control row-50">
+        <label for="fat" class="">
+          Fett
+          <input [field]="indredientForm.fat" type="number" id="fat" placeholder="Fett" class="formControl" />
+        </label>
+        <lib-error-message [control]="indredientForm.fat" />
+      </div>
+
+      <div class="form-control row-50">
+        <label for="dietaryFiber" class="">
+          Ballaststoffe
+          <input [field]="indredientForm.dietaryFiber" type="number" id="dietaryFiber" placeholder="Ballaststoffe"
+            class="formControl" />
+        </label>
+        <lib-error-message [control]="indredientForm.dietaryFiber" />
+      </div>
+    </div>
+
+    <div class="grid-container">
+      <div class="form-control row-50">
+        <div class="checkbox-group">
+          <label>Geürze
+            <input type="checkbox" [field]="indredientForm.isSpices"
+              class="ml-1 outline-lime-700 outline-1 accent-lime-700 checked:text-white">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="">
+      <button type="button" class="btn btn-ghost-primary w-[100px] flex justify-center ml-auto" (click)="onSubmit()"
+        [disabled]="indredientForm().invalid()" [class.disabled]="indredientForm().invalid()">
+        Speichern
+      </button>
+    </div>
+  </form>
+</div>

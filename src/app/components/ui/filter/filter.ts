@@ -1,25 +1,18 @@
-import { Component, model } from '@angular/core';
+import { Component } from '@angular/core';
+// data
 import recipiesCategories from '../../../../../data/recipiesCategories.json';
-
-import { FormsModule } from '@angular/forms';
-
-interface I_Category {
-  de: string;
-  en: string;
-}
 
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [FormsModule],
+  imports: [],
   templateUrl: './filter.html',
   styleUrl: './filter.scss',
 })
 export class FilterComponent {
-  protected recipiesCategories: I_Category[] = recipiesCategories;
-  protected selectedCategoryControl = model<string>('');
+  protected recipiesCategories: string[] = recipiesCategories;
 
   protected onChangeCategory(category: any) {
-    console.log(category.value);
+    console.log(category);
   }
 }

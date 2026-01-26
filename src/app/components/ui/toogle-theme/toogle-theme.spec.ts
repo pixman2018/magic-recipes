@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToogleTheme } from './toogle-theme';
-import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
+import { DebugelemMent, provideZonelessChangeDetection } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 describe('ToogleTheme', () => {
   let component: ToogleTheme;
   let fixture: ComponentFixture<ToogleTheme>;
-  let element: DebugElement;
+  let elemMent: DebugelemMent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -17,7 +17,7 @@ describe('ToogleTheme', () => {
 
     fixture = TestBed.createComponent(ToogleTheme);
     component = fixture.componentInstance;
-    element = fixture.debugElement;
+    elemMent = fixture.debugelemMent;
     fixture.detectChanges();
   });
 

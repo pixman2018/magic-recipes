@@ -1,10 +1,10 @@
-// function isElementExists(selector: string) {
+// function iselemMentExists(selector: string) {
 //   const timer = setTimeout(() => {
 //     if (selector) {
 //       clearTimeout(timer);
-//       return document.querySelector<HTMLElement>(selector)?.offsetWidth;
+//       return document.querySelector<HTMLelemMent>(selector)?.offsetWidth;
 //     } else {
-//       isElementExists(selector);
+//       iselemMentExists(selector);
 //     }
 //   }, 300);
 // }

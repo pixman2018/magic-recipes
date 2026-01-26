@@ -1,15 +1,17 @@
-import { Component, inject, Signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, Signal } from '@angular/core';
 
 // interface
-import { I_NavigationOptions } from '../../../models/options';
-import { I_Settings } from '../../../models/settings';
+import { I_NavigationOptions } from '../../../models/options.model';
+import { I_Settings } from '../../../models/settings.model';
 // service
 import { SettingsService } from '../../../services/settingsService/settings.service';
 // components
 import { MainNavComponent } from '../../ui/main-nav/main-nav-component';
 import { FilterComponent } from '../../ui/filter/filter';
-import { SearchBarComponent } from '../../ui/search-bar.component/search-bar.component';
+import { SearchBar } from '../../ui/search-bar/search-bar/search-bar';
 import { ToogleTheme } from '../../ui/toogle-theme/toogle-theme';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map, Subscription, tap } from 'rxjs';
 
 /**
  * This is the parent component at the top of the page.
@@ -23,12 +25,24 @@ import { ToogleTheme } from '../../ui/toogle-theme/toogle-theme';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MainNavComponent, SearchBarComponent, FilterComponent, ToogleTheme],
+  imports: [MainNavComponent, SearchBar, FilterComponent, ToogleTheme],
   templateUrl: './header-component.html',
   styleUrl: './header-component.scss',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
+  private _route = inject(ActivatedRoute);
+  private _router = inject(Router);
+
+  private _routerEventSub = new Subscription();
   protected navigationOptions: I_NavigationOptions = { showSearchbar: false, pagename: null };
+
+  ngOnInit() {
+    this._getPagename();
+  }
+
+  ngOnDestroy(): void {
+    this._routerEventSub.unsubscribe();
+  }
 
   constructor() {
     // Standard setting for displaying the search bar
@@ -51,5 +65,31 @@ export class HeaderComponent {
   protected onShowSearch(navigationOptions: I_NavigationOptions): void {
     this.navigationOptions.showSearchbar = navigationOptions.showSearchbar;
     this.navigationOptions.pagename = navigationOptions.pagename;
+  }
+
+  /**
+   *
+   * @description
+   * Retrieves the page name from the active route. If it is a redirect,
+   * the page name must be retrieved from the router events observable.
+   *
+   * @returns void
+   *
+   */
+  private _getPagename(): void {
+    const path = this._route.routeConfig?.path;
+    if (path) {
+      this.navigationOptions.pagename = path;
+    } else {
+      const event$ = this._router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe((event: NavigationEnd) => {
+          if (event.urlAfterRedirects) {
+            this.navigationOptions.pagename = event.urlAfterRedirects.split('/')[1];
+          }
+        });
+
+      this._routerEventSub.add(event$);
+    }
   }
 }

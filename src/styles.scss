@@ -22,7 +22,7 @@
   @apply flex items-center;
 }
 
-@utility flex-start-end {
+@utility flex-between {
   @apply flex justify-between;
 }
 
@@ -50,18 +50,29 @@
     @apply max-w-[1600px] mx-auto;
   }
 
-  .eleM {
+  .elemM {
     @apply mt-16;
+  }
+
+  .elemMR {
+    @apply flex ml-auto;
   }
 
   .li-odd {
     @apply p-2 odd:bg-lime-700/10;
   }
 
+  .li-even {
+    @apply p-2 even:bg-lime-700/10;
+  }
+
   .btn {
-    @apply rounded-full border-4  py-2 px-4 w-[100%] cursor-pointer;
+    @apply rounded-full border-4  py-2 px-2 w-[100%] cursor-pointer;
     &.btn-primary {
       @apply border-solid  border-lime-700/20 bg-lime-700/40;
+    }
+    &.btn-ghost-primary {
+      @apply border-solid  border-lime-700 border-1;
     }
   }
 
@@ -70,10 +81,17 @@
     &.clip-primary {
       @apply border-lime-700 bg-lime-700/50;
     }
+    &.clip-ghost-primary {
+      @apply border-lime-700 border-1;
+    }
   }
 
   .searchControl {
     @apply my-2 placeholder-white/50 placeholder:text-base w-[100%] bg-transparent ml-[-1.0rem] px-[2.5rem]  py-2 border-solid border-b-white/50 border-b-2 text-white focus:outline-lime-700/20 focus:text-white focus:border-b-white;
+  }
+
+  .formControl {
+    @apply w-[100%]  p-1 bg-transparent  text-lime-700 border-solid border-b-lime-700/50 border-l-lime-700/50 border-l-2 border-b-2 rounded-md placeholder-lime-700 placeholder:text-base focus:outline-lime-700/20 focus:text-black focus:border-b-white;
   }
 
   #mainnav {
@@ -118,4 +136,32 @@
       @apply mr-2 fill-lime-700;
     }
   }
+}
+
+// LAyout
+.grid-container {
+  display: flex;
+  gap: 4rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.row-50 {
+  width: 50%;
+}
+
+.row-100 {
+  width: 100%;
+}
+
+.row-33 {
+  width: calc(100% / 3);
+}
+
+.row-25 {
+  width: 25%;
+}
+
+.disabled {
+  opacity: 0.6;
 }

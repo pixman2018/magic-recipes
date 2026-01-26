@@ -1,0 +1,36 @@
+.step__header {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.step__header__icon {
+  display: flex;
+  align-items: center;
+}
+.step__header__icon__index {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+}
+
+.step__header__icon__index__disabled {
+  background: gray;
+}
+
+.step__header__icon__content {
+  padding: 0 0.5rem;
+}
+
+.step__header__line {
+  border-bottom: 2px solid #04325c;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  z-index: -1;
+}

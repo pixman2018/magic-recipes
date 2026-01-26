@@ -1,0 +1,9 @@
+@if (control()().touched() && control()().invalid()) {
+@for(error of this.control()().errors(); track error) {
+@if(error.message) {
+<ul class="error-list">
+  <li>{{error.message}}</li>
+</ul>
+}
+}
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit, output, signal } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
-import { I_NavigationOptions } from '../../../models/options';
+// interfaces
+import { I_NavigationOptions } from '../../../models/options.model';
 
 @Component({
   selector: 'app-main-nav',
@@ -16,6 +17,7 @@ export class MainNavComponent implements OnInit {
   handleShowSearch = output<I_NavigationOptions>();
 
   protected viewportWidth = signal(0);
+
   protected isMobile: boolean = false;
   protected showNavigation: boolean = false;
 

@@ -1,6 +1,6 @@
 import { Component, inject, Signal } from '@angular/core';
 import { SettingsService } from '../../../services/settingsService/settings.service';
-import { I_Settings } from '../../../models/settings';
+import { I_Settings } from '../../../models/settings.model';
 
 @Component({
   selector: 'app-toogle-theme',
@@ -14,6 +14,7 @@ export class ToogleTheme {
   private _settings: Signal<I_Settings> = this._settingsService.getSettings();
   protected isDark = this._settings().isDarkMode;
 
+  // TODO: set in CSS
   /**
    *
    * @description

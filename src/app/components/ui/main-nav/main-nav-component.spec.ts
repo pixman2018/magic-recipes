@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MainNavComponent } from './main-nav-component';
-import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
+import { DebugelemMent, provideZonelessChangeDetection } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { provideRouter, RouterLink } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -9,7 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('MainNavComponent', () => {
   let component: MainNavComponent;
   let fixture: ComponentFixture<MainNavComponent>;
-  let debugElement: DebugElement;
+  let debugelemMent: DebugelemMent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,7 +19,7 @@ describe('MainNavComponent', () => {
 
     fixture = TestBed.createComponent(MainNavComponent);
     component = fixture.componentInstance;
-    debugElement = fixture.debugElement;
+    debugelemMent = fixture.debugelemMent;
     fixture.autoDetectChanges();
   });
 
@@ -39,7 +39,7 @@ describe('MainNavComponent', () => {
 
   it('should click hamburger button', () => {
     component['showNavigation'] = false;
-    const hamburgerBtn = debugElement.query(By.css('#hamburgerBtn'));
+    const hamburgerBtn = debugelemMent.query(By.css('#hamburgerBtn'));
     expect(hamburgerBtn).toBeTruthy();
 
     hamburgerBtn.triggerEventHandler('click');
@@ -48,7 +48,7 @@ describe('MainNavComponent', () => {
 
   it('should close navigation when close icon is clicked', () => {
     component['showNavigation'] = true;
-    const closeBtn = debugElement.query(By.css('#closeBtn'));
+    const closeBtn = debugelemMent.query(By.css('#closeBtn'));
     expect(closeBtn).toBeTruthy();
 
     closeBtn.triggerEventHandler('click');
@@ -71,7 +71,7 @@ describe('MainNavComponent', () => {
   it('should emit handleShowSearch when clicking on "Rezepte"', () => {
     const emittedValues: any[] = [];
     component.handleShowSearch.subscribe((value) => emittedValues.push(value));
-    const link = fixture.debugElement.query(By.css('a[routerLink="recipesList"]'));
+    const link = fixture.debugelemMent.query(By.css('a[routerLink="recipesList"]'));
     link.triggerEventHandler('click', new Event('click'));
     expect(emittedValues.length).toBe(1);
     expect(emittedValues[0]).toEqual({

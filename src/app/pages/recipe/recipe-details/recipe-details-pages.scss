@@ -4,3 +4,20 @@
     content: ', ';
   }
 }
+
+figure img {
+  max-height: 400px;
+  margin: 0 auto;
+}
+
+.glass-edge {
+  filter: blur(8px);
+}
+
+.infobox {
+  background-color: rgba(73, 125, 0, 0.2);
+  -webkit-mask-image: radial-gradient(circle, black 40%, transparent 95%);
+  mask-image: radial-gradient(circle, black 40%, transparent 95%);
+
+  padding: 40px;
+}

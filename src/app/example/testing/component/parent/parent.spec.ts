@@ -9,7 +9,7 @@ import { By } from '@angular/platform-browser';
 xdescribe('Parent', () => {
   let component: Parent;
   let fixture: ComponentFixture<Parent>;
-  let h1: HTMLElement;
+  let h1: HTMLelemMent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,7 +19,7 @@ xdescribe('Parent', () => {
 
     fixture = TestBed.createComponent(Parent);
     component = fixture.componentInstance;
-    h1 = fixture.nativeElement.querySelector('h1');
+    h1 = fixture.nativeelemMent.querySelector('h1');
     fixture.detectChanges();
 
     /*
@@ -103,9 +103,9 @@ xdescribe('Parent', () => {
 
   /** child component */
   it('should Child2Compoent be included in the template', () => {
-    const childElement = fixture.debugElement.query(By.directive(Child2));
+    const childelemMent = fixture.debugelemMent.query(By.directive(Child2));
     // by show flag
-    // expect(childElement).not.toBeNull();
-    expect(childElement).toBeTruthy();
+    // expect(childelemMent).not.toBeNull();
+    expect(childelemMent).toBeTruthy();
   });
 });

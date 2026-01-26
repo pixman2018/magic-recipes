@@ -3,7 +3,7 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 // import { provideHttpClient } from '@angular/common/http';
 
 import { routes } from './app.routes';
@@ -13,7 +13,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 
-import { firebaseConfig } from '../config/firebaseConfig';
+import { firebaseConfig } from '../firebaseUtil/firebaseConfig';
 import { environment } from '../environments/environment.development';
 import { connectAuthEmulator } from '@firebase/auth';
 import { connectFirestoreEmulator } from '@firebase/firestore';
@@ -23,11 +23,11 @@ export const appConfig: ApplicationConfig = {
     // provideHttpClient(),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding()),
     provideFirebaseApp(() =>
       initializeApp({
         ...firebaseConfig,
-      })
+      }),
     ),
     provideAuth(() => {
       const auth = getAuth();
@@ -42,10 +42,7 @@ export const appConfig: ApplicationConfig = {
       if (environment.useEmulators) {
         connectFirestoreEmulator(firestore, 'localhost', 8080);
       }
-      console.log('GO');
       return firestore;
     }),
   ],
 };
-
-console.log(environment.useEmulators);

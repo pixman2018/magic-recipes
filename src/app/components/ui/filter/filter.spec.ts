@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterComponent } from './filter';
-import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
+import { DebugelemMent, provideZonelessChangeDetection } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 describe('Filter', () => {
   let component: FilterComponent;
   let fixture: ComponentFixture<FilterComponent>;
-  let debugElement: DebugElement;
+  let debugelemMent: DebugelemMent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -17,7 +17,7 @@ describe('Filter', () => {
 
     fixture = TestBed.createComponent(FilterComponent);
     component = fixture.componentInstance;
-    debugElement = fixture.debugElement;
+    debugelemMent = fixture.debugelemMent;
     fixture.detectChanges();
   });
 
@@ -29,11 +29,11 @@ describe('Filter', () => {
     expect(component['recipiesCategories'].length).toBeGreaterThan(0);
   });
 
-  it('should call onChangeCategory with the selected DOM element when category changes', () => {
+  it('should call onChangeCategory with the selected DOM elemMent when category changes', () => {
     //   // 🕵️  Observe method
     spyOn(component as any, 'onChangeCategory').and.callThrough();
 
-    const select: HTMLSelectElement = fixture.nativeElement.querySelector('#categoryCtrl');
+    const select: HTMLSelectelemMent = fixture.nativeelemMent.querySelector('#categoryCtrl');
     // Ensure that the options have been rendered
     fixture.detectChanges();
     //   // Select second option

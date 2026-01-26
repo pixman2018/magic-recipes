@@ -31,14 +31,14 @@ describe('App', () => {
   // it('should render title', () => {
   //   const fixture = TestBed.createComponent(App);
   //   fixture.detectChanges();
-  //   const compiled = fixture.nativeElement as HTMLElement;
+  //   const compiled = fixture.nativeelemMent as HTMLelemMent;
   //   expect(compiled.querySelector('h1')?.textContent).toContain('Angular');
   // });
 
   it('should HeaderComponent be included in the template', () => {
-    const childElement = fixture.debugElement.query(By.directive(HeaderComponent));
+    const childelemMent = fixture.debugelemMent.query(By.directive(HeaderComponent));
     // by show flag
-    // expect(childElement).not.toBeNull();
-    expect(childElement).toBeTruthy();
+    // expect(childelemMent).not.toBeNull();
+    expect(childelemMent).toBeTruthy();
   });
 });

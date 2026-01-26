@@ -1,25 +1,9 @@
-import { Component, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, effect, inject, Signal } from '@angular/core';
 
-import { I_Recipe } from '../../models/recipe';
+import { I_Recipe } from '../../models/recipe.model';
 import { RecipeStore } from '../../services/recipesStore/recipe-store';
-import { RecipesList } from '../../components/recipe/recipes-list/recipes-list';
+import { RecipesList } from '../recipe/recipes-list/recipes-list';
 
-/**
- *
- * @description
- * provides the recipes and filters their content as needed.
- * These are passed on to the presentation component “recipe-list.”
- *
- * @property
- * @private _recipeStore
- * @protected recipes$
- * Observable vom Recipes
- *
- * @method
- * @private
- * _loadAllRecipes
- */
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -28,17 +12,12 @@ import { RecipesList } from '../../components/recipe/recipes-list/recipes-list';
   styleUrl: './home-page.scss',
 })
 export class HomePage {
-  // private _recipeStore = inject(RecipeStore);
-  // protected recipes$: Observable<I_Recipe[] | []> = this._loadAllRecipes();
-  /**
-   *
-   * @description
-   * fetch all resipe from the "recipe-store"
-   *
-   * @private
-   * @returns recipes as Observable
-   */
-  // private _loadAllRecipes(): Observable<I_Recipe[]> {
-  //   return (this.recipes$ = this._recipeStore.getRecipes$);
-  // }
+  private _recipeStore = inject(RecipeStore);
+  protected recipes: Signal<I_Recipe[]> = this._recipeStore.recipes;
+
+  constructor() {
+    effect(() => {
+      this.recipes = this._recipeStore.recipes;
+    });
+  }
 }

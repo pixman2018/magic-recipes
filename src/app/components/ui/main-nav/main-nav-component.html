@@ -21,13 +21,13 @@
 
   <ul class="mainnav-list-container " [class.flex]="showNavigation " [class.hidden]="!showNavigation" id="mainnavList">
     <li class="mainnav-list-item ">
-      <a class="mainnav-list-link" routerLink="recipesList" routerLinkActive="text-white"
+      <a class="mainnav-list-link" routerLink="recipes" routerLinkActive="text-white"
         (click)=" onShowSearchbar(true, 'recipies' )">
         Rezepte
       </a>
     </li>
     <li class="mainnav-list-item ">
-      <a class="mainnav-list-link " routerLink="ingridiens" routerLinkActive="text-white"
+      <a class="mainnav-list-link " routerLink="ingredient" routerLinkActive="text-white"
         (click)="onShowSearchbar(true, 'ingridiens')">
         Zutaten
       </a>
@@ -44,5 +44,14 @@
         Essensplan
       </a>
     </li>
+    <!-- TODO: ADMIN -->
+    <li class="mainnav-list-item ">
+      <a class="mainnav-list-link " routerLink="add-recipe" routerLinkActive="text-white"
+        (click)="onShowSearchbar(false, 'add-recipe')">
+        Rezept hinzufügen
+      </a>
+    </li>
+
+
   </ul>
 </nav>

@@ -1,0 +1,193 @@
+<div class="container">
+  <!-- <pre>
+  ingredientFormValid {{ ingredientFormValid() | json}}
+  {{ ingridientForm()?.invalid()}}
+  {{ ingridientForm()?.invalid() && !ingredientFormValid() }}
+</pre> -->
+  <lib-stepper>
+    <lib-step [currentStep]="currentStep">
+      <ng-template #legend>
+        <div>Allgemein</div>
+      </ng-template>
+
+      <form id="step_1" class="step__hidden" [class.step__show]="currentStep() === 1">
+        <div class="grid-container">
+          <div class="form-control row-50">
+            <label for="title" class="">
+              Titel
+              <input [field]="generalRecipeForm.title" type="text" id="title" placeholder="Titel" class="formControl" />
+            </label>
+            <lib-error-message [control]="generalRecipeForm.title" />
+          </div>
+
+          <div class="form-control row-50">
+            <label for="title" class="">
+              Cover
+              <input [field]="generalRecipeForm.image" type="text" id="image" placeholder="Cover URL"
+                class="formControl" />
+            </label>
+          </div>
+        </div>
+
+        <div class="grid-container">
+          <div class="form-control w-[100%]">
+            <label for="title" class="">
+              Beschreibung
+              <textarea [field]="generalRecipeForm.text" id="text" placeholder="Beschreibung" class="formControl"
+                cols="4"></textarea>
+            </label>
+            <lib-error-message [control]="generalRecipeForm.text" />
+          </div>
+        </div>
+
+        <div class="grid-container flex items-start">
+          <div class="form-control row-25">
+            <label for="title" class="">
+              Schwierigkeitsgrad
+              <input [field]="generalRecipeForm.levelOfDifficulty" type="number" id="levelOfDifficulty"
+                placeholder="1-3" class="formControl" />
+            </label>
+            <lib-error-message [control]="generalRecipeForm.levelOfDifficulty" />
+          </div>
+
+
+          <div class="form-control row-25">
+            <label for="title" class="">
+              Kochzeit
+              <input [field]="generalRecipeForm.cookingTime" type="number" id="cookingTime" placeholder="Kochzeit"
+                class="formControl" />
+            </label>
+            <lib-error-message [control]="generalRecipeForm.cookingTime" />
+          </div>
+
+          <div class="form-control row-25">
+            <label for="title" class="">
+              Vorbereitungszeit
+              <input [field]="generalRecipeForm.preparationTime" type="number" id="preparationTime"
+                placeholder="Vorbereitungszeit" class="formControl" />
+            </label>
+            <lib-error-message [control]="generalRecipeForm.preparationTime" />
+          </div>
+
+
+          <div class="form-control row-25 mt-7">
+            <lib-dropdown-checkbox [field]="generalRecipeForm.categories" [items]="recipiesCategories"
+              title="Kategorie" />
+          </div>
+        </div>
+
+        <div class="step__action">
+          <button type="button" class="btn btn-primary w-[100px] flex justify-center ml-auto"
+            [class.disabled]="generalRecipeForm()?.invalid()" [disabled]="generalRecipeForm()?.invalid()"
+            (click)="onNextStep()">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
+              <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </lib-step>
+
+    <lib-step [currentStep]="currentStep">
+      <ng-template #legend>
+        <div>Zutaten</div>
+      </ng-template>
+      @if (currentStep() === 2) {
+      <div class="dynamic-form-control">
+        <button type="button" class="btn btn-primary w-[100px] flex justify-center ml-auto" (click)="onAddIngridient()">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
+            <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+          </svg>
+        </button>
+      </div>
+      }
+
+      @for (ingridientForm of ingridientForm.ingredients; let index = $index; track index; let last = $last) {
+
+      <form [id]="'step_2' + index" class="step__hidden" [class.step__show]="currentStep() === 2">
+        <div class="grid-container flex items-start">
+
+          <div class="form-control row-25">
+            <label [for]="'unit' + index" class="">
+              Gewicht
+              <input [field]="ingridientForm.unit" type="number" [id]="'unit' + index" placeholder="Gewicht"
+                class="formControl" />
+            </label>
+            <lib-error-message [control]="ingridientForm.unit" />
+          </div>
+
+          <lib-dropdown [id]="'unitOfmeasurement' + index" [field]="ingridientForm.unitOfmeasurement"
+            [items]="unitOfmeasurements" title="Gewichteinheit" class="form-control row-25" />
+
+
+          <div class="form-control row-50">
+            <label [for]="'ingridient' + index" class="">
+              Zutat
+              <input [field]="ingridientForm.ingredient" type="text" [id]="'ingredient' + index" placeholder="Zutat"
+                class="formControl" (input)="onAddAndCheckIngredient(ingridientForm, index)" />
+            </label>
+            <lib-error-message [control]="ingridientForm.ingredient" />
+          </div>
+        </div>
+      </form>
+
+      @if (!ingredientFormValid() && ingridientForm()?.valid() && showIngredientForm() && last) {
+      <app-ingredient-form  [ingridient]="ingridientForm.ingredient().value()" [indexIngredient]="index"
+        (indredientFormResult)="onIndredientFormResult($event)" />
+      }
+      }
+
+      @if (currentStep() === 2 ) {
+      <div class="step__action">
+        <button type="button" class="btn btn-primary w-[100px] flex justify-center ml-auto"
+          [class.disabled]=" !ingredientFormValid()" [disabled]=" !ingredientFormValid()" (click)="onNextStep()">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
+            <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z" />
+          </svg>
+        </button>
+      </div>
+      }
+
+
+    </lib-step>
+
+    <lib-step [currentStep]="currentStep">
+      <ng-template #legend>
+        <div>Schritte</div>
+      </ng-template>
+      @if (currentStep() === 3) {
+      <div class="dynamic-form-control">
+        <button type="button" class="btn btn-primary w-[100px] flex justify-center ml-auto" (click)="onAddStep()">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
+            <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+          </svg>
+        </button>
+      </div>
+      }
+
+      @for(stepForm of stepForm.steps; let index = $index; track index) {
+      <form [id]="'step_3' + index" class="step__hidden" [class.step__show]="currentStep() === 3">
+        <div class="grid-container">
+          <div class="form-control row-100">
+            <label for="title" class="">
+              {{index + 1}}. Schritt
+              <textarea [field]="stepForm.step" type="text" [id]="'step' + index" cols="4" placeholder="Schritt"
+                class="formControl" (keydown.enter)="onCheckStepValue()" (change)="onCheckStepValue()"></textarea>
+            </label>
+            <lib-error-message [control]="stepForm.step" />
+          </div>
+        </div>
+      </form>
+      }
+    </lib-step>
+
+    @if (currentStep() === 3 && generalRecipeForm().valid() && ingridientForm().valid() && stepForm().valid() &&
+    isLastStepValid()) {
+    <div class="step__action">
+      <button type="button" class="btn btn-primary w-[100px] flex justify-center ml-auto" (click)="onSubmit()">
+        Anlegen
+      </button>
+    </div>
+    }
+  </lib-stepper>
+</div>

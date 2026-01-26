@@ -1,0 +1,50 @@
+[
+  {
+    "de": "Frückstück",
+    "en": "Breakfast"
+  },
+  {
+    "de": "Mittagessen",
+    "en": "lunch"
+  },
+  {
+    "de": "Hauptgericht",
+    "en": "Main course"
+  },
+  {
+    "de": "Abendbrot",
+    "en": "Dinner"
+  },
+  {
+    "de": "Snack",
+    "en": "Snack"
+  },
+  {
+    "de": "Vorspeise",
+    "en": "Appetizer"
+  },
+  {
+    "de": "Salate",
+    "en": "Salads"
+  },
+  {
+    "de": "Dessert",
+    "en": "Desserts"
+  },
+  {
+    "de": "Suppen",
+    "en": "Soups"
+  },
+  {
+    "de": "Sandwiches",
+    "en": "Sandwiches"
+  },
+  {
+    "de": "Smoothies",
+    "en": "Smoothies"
+  },
+  {
+    "de": "Für unterwegs",
+    "en": "For on the go"
+  }
+]

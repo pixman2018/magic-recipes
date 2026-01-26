@@ -1,0 +1,21 @@
+<div class="step__header">
+
+    <div class="step__header__line"></div>
+    @for (legendValue of legendValues; track index; let index = $index) {
+    <div class="step__header__icon ">
+        <div [class.bg-lime-700]="index + 1 <= currentStepIndex()" [class.bg-gray-400]="index + 1 > currentStepIndex()"
+            class="step__header__icon__index  text-white">{{index
+            +
+            1}}
+        </div>
+        @if (legendValue) {
+        <div class="step__header__icon__content bg-white text-black">
+            {{legendValue}}
+        </div>
+        }
+    </div>
+    }
+
+</div>
+
+<ng-content></ng-content>
