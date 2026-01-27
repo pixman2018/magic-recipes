@@ -18,7 +18,7 @@
   [class.hidden]="showDropdown() === false" [class.block]="showDropdown()">
   @for (item of items(); track item) {
   <label class="flex items-center gap-2 text-black cursor-pointer">
-    <input type="checkbox" [checked]="value().includes(item)" [id]="id"
+    <input type="checkbox" [checked]="value().includes(item)" [id]="id()"
       class="accent-lime-700 w-3 h-3 focus:ring-2 focus:ring-lime-soft text-black" (change)="setItems(item)" />
     {{ item }}
   </label>

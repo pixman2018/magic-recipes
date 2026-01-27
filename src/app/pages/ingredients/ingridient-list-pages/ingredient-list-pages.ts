@@ -14,12 +14,12 @@ import { JsonPipe } from '@angular/common';
 import { IngredientForm } from '../ingredient-form/ingredient-form';
 import { RecipeStore } from '../../../services/recipesStore/recipe-store';
 import { I_Recipe } from '../../../models/recipe.model';
-import { Field, form, pattern } from '@angular/forms/signals';
+import { form, pattern } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-ingridient-list',
   standalone: true,
-  imports: [JsonPipe, Field],
+  imports: [JsonPipe],
   templateUrl: './ingredient-list-pages.html',
   styleUrl: './ingredient-list-pages.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

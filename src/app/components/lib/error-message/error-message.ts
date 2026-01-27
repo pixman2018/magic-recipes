@@ -7,7 +7,7 @@ import { FieldState, FieldTree } from '@angular/forms/signals';
  */
 @Component({
   selector: 'lib-error-message',
-  imports: [JsonPipe],
+  imports: [],
   templateUrl: './error-message.html',
   styleUrl: './error-message.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

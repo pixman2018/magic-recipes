@@ -16,7 +16,7 @@ import { JsonPipe } from '@angular/common';
  * In the step component, the currentStep must be bound as an input binding
  * transferred to the stepper content, and the form and control buttons
  * are placed in their content. Optionally, you can give the step a name.
- * 
+ *
  * Example
  * <lib-stepper>
     <lib-step [currentStep]="currentStep">
@@ -55,7 +55,7 @@ import { JsonPipe } from '@angular/common';
  */
 @Component({
   selector: 'lib-stepper',
-  imports: [Step, JsonPipe],
+  imports: [],
   templateUrl: './stepper.html',
   styleUrl: './stepper.scss',
   host: {

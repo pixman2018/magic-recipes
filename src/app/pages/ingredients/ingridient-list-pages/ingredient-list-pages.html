@@ -1,8 +1,19 @@
-<p>ingridient-list-pages works!</p>
+<section class="container">
 
+  <div>
+    <button (click)="updateAll()" class="p-2 border-1 border-black cursor-pointer">Update</button>
+    <button (click)="updateAllRecipies()" class="p-2 border-1 border-black cursor-pointer">Update Recipes</button>
+  </div>
+  @if (ingredients()) {
+  <ul class="leading-6">
+    @for(ingredient of ingredients(); track ingredient.id) {
+    <li class="flex-between li-even">{{ ingredient.ingredient}} -- {{ ingredient.id}} </li>
+    }
+  </ul>
+  }
+</section>
 
-<button (click)="updateAll()" class="p-2 border-1 border-black cursor-pointer">Update</button>
-<button (click)="updateAllRecipies()" class="p-2 border-1 border-black cursor-pointer">Update Recipes</button>
-<!-- <pre>
-  ingredients: {{ ingredients() | json}}
-</pre> -->
+<pre>
+  {{ ingredients | json}}
+</pre>
+koriander

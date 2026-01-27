@@ -7,7 +7,7 @@
       <div class="form-control row-50">
         <label for="ingredient" class="">
           Zutat
-          <input [field]="indredientForm.ingredient" type="text" id="ingredient" placeholder="Zutat"
+          <input [formField]="indredientForm.ingredient" type="text" id="ingredient" placeholder="Zutat"
             class="formControl disabled" />
         </label>
         <lib-error-message [control]="indredientForm.ingredient" />
@@ -16,7 +16,7 @@
       <div class="form-control row-50">
         <label for="calories" class="">
           Kalorien (kcal)
-          <input [field]="indredientForm.calories" type="number" id="calories" placeholder="Kalorien (kcal)"
+          <input [formField]="indredientForm.calories" type="number" id="calories" placeholder="Kalorien (kcal)"
             class="formControl" />
         </label>
         <lib-error-message [control]="indredientForm.calories" />
@@ -27,7 +27,7 @@
       <div class="form-control row-50">
         <label for="protein" class="">
           Protein
-          <input [field]="indredientForm.protein" type="number" id="protein" placeholder="Protein"
+          <input [formField]="indredientForm.protein" type="number" id="protein" placeholder="Protein"
             class="formControl" />
         </label>
         <lib-error-message [control]="indredientForm.protein" />
@@ -36,7 +36,7 @@
       <div class="form-control row-50">
         <label for="carbohydrates" class="">
           Kohlenhydrate
-          <input [field]="indredientForm.carbohydrates" type="number" id="carbohydrates" placeholder="Kohlenhydrate"
+          <input [formField]="indredientForm.carbohydrates" type="number" id="carbohydrates" placeholder="Kohlenhydrate"
             class="formControl" />
         </label>
         <lib-error-message [control]="indredientForm.carbohydrates" />
@@ -49,7 +49,7 @@
       <div class="form-control row-50">
         <label for="fat" class="">
           Fett
-          <input [field]="indredientForm.fat" type="number" id="fat" placeholder="Fett" class="formControl" />
+          <input [formField]="indredientForm.fat" type="number" id="fat" placeholder="Fett" class="formControl" />
         </label>
         <lib-error-message [control]="indredientForm.fat" />
       </div>
@@ -57,7 +57,7 @@
       <div class="form-control row-50">
         <label for="dietaryFiber" class="">
           Ballaststoffe
-          <input [field]="indredientForm.dietaryFiber" type="number" id="dietaryFiber" placeholder="Ballaststoffe"
+          <input [formField]="indredientForm.dietaryFiber" type="number" id="dietaryFiber" placeholder="Ballaststoffe"
             class="formControl" />
         </label>
         <lib-error-message [control]="indredientForm.dietaryFiber" />
@@ -68,7 +68,7 @@
       <div class="form-control row-50">
         <div class="checkbox-group">
           <label>Geürze
-            <input type="checkbox" [field]="indredientForm.isSpices"
+            <input type="checkbox" [formField]="indredientForm.isSpices"
               class="ml-1 outline-lime-700 outline-1 accent-lime-700 checked:text-white">
           </label>
         </div>

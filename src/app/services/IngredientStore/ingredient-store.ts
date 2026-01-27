@@ -67,8 +67,9 @@ export class IngredientStore {
     };
   }
 
-  public async getByIngredient(name: string): Promise<I_Ingredient[]> {
-    const q = query(this._ingredientsColRef, where('ingredient', '==', name));
+  public async getByIngredient(ingredient: string): Promise<I_Ingredient[]> {
+    console.log('params', ingredient);
+    const q = query(this._ingredientsColRef, where('ingredient', '==', ingredient.trim()));
     const snapshot = await getDocs(q);
 
     return snapshot.docs.map((doc) => ({

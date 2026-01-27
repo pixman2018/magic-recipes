@@ -1,12 +1,20 @@
 import { Component, effect, inject, input, OnInit, output, signal } from '@angular/core';
-import { form, required, Field, min, minLength, disabled, readonly } from '@angular/forms/signals';
+import {
+  FormField,
+  form,
+  required,
+  min,
+  minLength,
+  disabled,
+  readonly,
+} from '@angular/forms/signals';
 import { ErrorMessage } from '../../../components/lib/error-message/error-message';
 import { I_Ingredient, I_IngredientItem } from '../../../models/ingredient.model';
 import { IngredientStore } from '../../../services/IngredientStore/ingredient-store';
 
 @Component({
   selector: 'app-ingredient-form',
-  imports: [Field, ErrorMessage],
+  imports: [FormField, ErrorMessage],
   templateUrl: './ingredient-form.html',
   styleUrl: './ingredient-form.scss',
 })

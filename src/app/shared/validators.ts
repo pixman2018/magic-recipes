@@ -5,10 +5,9 @@ export function isBetween(
   field: SchemaPath<number>,
   min: number,
   max: number,
-  options?: { message?: string }
+  options?: { message?: string },
 ) {
   validate(field, ({ value }) => {
-    console.log('INOIT');
     if (value() === null || value() === undefined) {
       return null;
     }
@@ -48,7 +47,7 @@ export function isNumber(field: SchemaPath<string>, options?: { message?: string
 export function confirmValue(
   field: SchemaPath<string>,
   confirmField: SchemaPath<string>,
-  options?: { message: string }
+  options?: { message: string },
 ) {
   validate(confirmField, ({ value, stateOf }) => {
     const confirmFieldItem = value();
@@ -100,7 +99,7 @@ export function fromToday(field: SchemaPath<string>, options?: { message: string
 export function startAfterEndDate(
   endDateField: SchemaPath<string>,
   startDateField: SchemaPath<string>,
-  options?: { message: string }
+  options?: { message: string },
 ) {
   validate(endDateField, ({ value, stateOf }) => {
     const endDate = value();

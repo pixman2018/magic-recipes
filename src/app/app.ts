@@ -10,7 +10,7 @@ import { ConfirmDialog } from './components/message/confirm-dialog/confirm-dialo
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, Parent, Message, ConfirmDialog],
+  imports: [RouterOutlet, HeaderComponent, Message, ConfirmDialog],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

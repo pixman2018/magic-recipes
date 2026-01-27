@@ -5,11 +5,12 @@ import { RouterLink } from '@angular/router';
 import { I_Recipe } from '../../../models/recipe.model';
 // pipes
 import { UcfirstPipe } from '../../../shared/pipes/ucFirst/ucfirst.pipe';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-recipes-list',
   standalone: true,
-  imports: [RouterLink, UcfirstPipe],
+  imports: [RouterLink, UcfirstPipe, JsonPipe],
   templateUrl: './recipes-list.html',
   styleUrl: './recipes-list.scss',
 })

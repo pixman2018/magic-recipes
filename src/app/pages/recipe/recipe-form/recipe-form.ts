@@ -1,24 +1,28 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import {
   form,
   minLength,
   required,
   min,
-  Field,
   applyEach,
   FieldTree,
+  FormField,
 } from '@angular/forms/signals';
+import { Router } from '@angular/router';
 
 // store, service, interfaces
 import { IngredientStore } from '../../../services/IngredientStore/ingredient-store';
 import { RecipeStore } from '../../../services/recipesStore/recipe-store';
 import { CalcCaloriesServiceTs } from '../../../services/calcCaloriesService/calc-calories-service';
 import { I_Recipe } from '../../../models/recipe.model';
-import {
-  I_Ingredient,
-  I_IngredientInRecipe,
-  I_NutritionalValues,
-} from '../../../models/ingredient.model';
+import { I_Ingredient, I_NutritionalValues } from '../../../models/ingredient.model';
 
 // validators
 import { isBetween } from '../../../shared/validators';
@@ -53,6 +57,7 @@ interface I_IngridientData {
   unitOfmeasurement: string;
   spices: boolean;
   ingredientId: string;
+  nutritionalValues?: I_NutritionalValues;
 }
 
 interface I_StepListData {
@@ -64,13 +69,14 @@ interface I_StepData {
 
 @Component({
   selector: 'app-recipe-form',
-  imports: [Field, Stepper, Step, ErrorMessage, Dropdown, DropdownCheckbox, IngredientForm],
+  imports: [FormField, Stepper, Step, ErrorMessage, Dropdown, DropdownCheckbox, IngredientForm],
   providers: [CalcCaloriesServiceTs],
   templateUrl: './recipe-form.html',
   styleUrl: './recipe-form.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecipeForm {
+  private _router = inject(Router);
   private _ingridientStore = inject(IngredientStore);
   private _recipeStore = inject(RecipeStore);
   private _calcCaloriesService = inject(CalcCaloriesServiceTs);
@@ -82,12 +88,35 @@ export class RecipeForm {
   protected isLastStepValid = signal<boolean>(false);
   protected ingredientFormValid = signal<boolean>(false);
   protected showIngredientForm = signal<boolean>(false);
-  private _totalNutritionalValues = signal<I_NutritionalValues>({
-    calories: 0,
-    protein: 0,
-    carbohydrates: 0,
-    dietaryFiber: 0,
-    fat: 0,
+  // private _totalNutritionalValues = signal<I_NutritionalValues>({
+  //   calories: 0,
+  //   protein: 0,
+  //   carbohydrates: 0,
+  //   dietaryFiber: 0,
+  //   fat: 0,
+  // });
+  protected totalNutritionalValues = computed(() => {
+    const ingredients = this._ingridientModel().ingredients;
+    // set default value
+    const totals: I_NutritionalValues = {
+      calories: 0,
+      protein: 0,
+      carbohydrates: 0,
+      dietaryFiber: 0,
+      fat: 0,
+    };
+    // sum up all ingredients that already have calculated values
+    ingredients.forEach((ingredient) => {
+      if (ingredient.nutritionalValues) {
+        ((totals.calories += ingredient.nutritionalValues.calories),
+          (totals.protein += ingredient.nutritionalValues.protein),
+          (totals.carbohydrates += ingredient.nutritionalValues.carbohydrates),
+          (totals.fat += ingredient.nutritionalValues.fat),
+          (totals.dietaryFiber += ingredient.nutritionalValues.dietaryFiber));
+      }
+    });
+
+    return totals;
   });
 
   constructor() {
@@ -152,9 +181,6 @@ export class RecipeForm {
   });
 
   protected onAddIngridient(ingredient?: I_IngridientData) {
-    console.log('valid', this.ingridientForm.ingredients().valid());
-    console.log('ingredient', ingredient);
-    console.log('ingredient.unitOfmeasurement', ingredient?.unitOfmeasurement);
     if (this.ingridientForm.ingredients().valid()) {
       if (ingredient?.unitOfmeasurement) {
         ingredient.unitOfmeasurement = ingredient?.unitOfmeasurement.toLowerCase();
@@ -188,32 +214,55 @@ export class RecipeForm {
   }
 
   protected async onAddAndCheckIngredient(
-    ingredient: FieldTree<I_IngridientData, number>,
+    ingredientField: FieldTree<I_IngridientData, number>,
     index: number,
   ) {
-    const ingredientTmp = await this._ingridientStore.getByIngredient(
-      ingredient.ingredient().value().toLowerCase(),
-    );
+    // Kurzer Microtask-Wait, damit das Signal den Wert vom Template sicher übernommen hat
+    await Promise.resolve();
+    const ingredientValue = ingredientField.ingredient().value();
+    console.log('formvalue', ingredientValue);
 
-    if (ingredientTmp.length && ingredientTmp[0].id && index >= 0) {
-      this.ingredientFormValid.set(true);
-      this.showIngredientForm.set(false);
-      this._updateIdInIngredient(ingredientTmp[0].id, index);
-      // set nutritional values
-      const nutritionalValues: I_NutritionalValues | void =
-        await this._calcCaloriesService.convertCaloriens(
-          ingredient().value(),
-          ingredient().value().ingredientId,
-        );
-      console.log('nutritionalValues', nutritionalValues);
-      if (nutritionalValues) {
-        this.setAllNutritionalValues(this._ingridientModel().ingredients[index], nutritionalValues);
-      } else {
-        console.error('No nutritionalValues.');
-      }
-    } else {
+    if (!ingredientValue || ingredientValue.length < 3) {
       this.ingredientFormValid.set(false);
-      this.showIngredientForm.set(true);
+      this.showIngredientForm.set(false);
+      return;
+    }
+
+    try {
+      const ingredientTmp = await this._ingridientStore.getByIngredient(
+        ingredientValue.toLowerCase().trim(),
+      );
+
+      if (ingredientTmp.length > 0 && ingredientTmp[0].id) {
+        const id = ingredientTmp[0].id;
+        this.ingredientFormValid.set(true);
+        this.showIngredientForm.set(false);
+
+        // Update ID in model
+        this._updateIdInIngredient(id, index);
+
+        // Calculate calories
+        // We retrieve the current status of the specific ingredient
+        const currentIngData = this._ingridientModel().ingredients[index];
+
+        if (currentIngData.unit > 0) {
+          const nutritionalValues: I_NutritionalValues | void =
+            await this._calcCaloriesService.convertCaloriens(currentIngData, id);
+          if (nutritionalValues) {
+            this.setAllNutritionalValues(nutritionalValues, index);
+          } else {
+            console.error('No nutritionalValues.');
+          }
+        } else {
+          console.error('currentIngData.unit > 0');
+        }
+      } else {
+        // Ingredient not in DB -> Display form for creating new entry
+        this.ingredientFormValid.set(false);
+        this.showIngredientForm.set(true);
+      }
+    } catch (error) {
+      this.ingredientFormValid.set(false);
     }
   }
   // output
@@ -228,10 +277,7 @@ export class RecipeForm {
         );
 
       if (nutritionalValues) {
-        this.setAllNutritionalValues(
-          this._ingridientModel().ingredients[ingredient.indexIngredient],
-          nutritionalValues,
-        );
+        this.setAllNutritionalValues(nutritionalValues, ingredient.indexIngredient);
       } else {
         console.error('nutritionalValues not found.');
       }
@@ -251,20 +297,23 @@ export class RecipeForm {
     }
   }
 
-  private setAllNutritionalValues(
-    ingredient: I_IngredientInRecipe,
-    nutritionalValues: I_NutritionalValues,
-  ): void {
-    console.log('ingredient', ingredient);
-    console.log('nutritionalValues', nutritionalValues);
-    this._totalNutritionalValues.update((currentNutritionalValues) => ({
-      ...currentNutritionalValues,
-      calories: (currentNutritionalValues.calories += nutritionalValues.calories),
-      protein: (currentNutritionalValues.protein += nutritionalValues.protein),
-      carbohydrates: (currentNutritionalValues.carbohydrates += nutritionalValues.carbohydrates),
-      fat: (currentNutritionalValues.fat += nutritionalValues.fat),
-      dietaryFiber: (currentNutritionalValues.dietaryFiber += nutritionalValues.dietaryFiber),
-    }));
+  private setAllNutritionalValues(nutritionalValues: I_NutritionalValues, index: number): void {
+    // this._totalNutritionalValues.update((currentNutritionalValues) => ({
+    //   ...currentNutritionalValues,
+    //   calories: (currentNutritionalValues.calories += nutritionalValues.calories),
+    //   protein: (currentNutritionalValues.protein += nutritionalValues.protein),
+    //   carbohydrates: (currentNutritionalValues.carbohydrates += nutritionalValues.carbohydrates),
+    //   fat: (currentNutritionalValues.fat += nutritionalValues.fat),
+    //   dietaryFiber: (currentNutritionalValues.dietaryFiber += nutritionalValues.dietaryFiber),
+    // }));
+    if (nutritionalValues) {
+      this._ingridientModel.update((currentIngredient) => ({
+        ...currentIngredient,
+        ingredients: currentIngredient.ingredients.map((ingredient, i) =>
+          i === index ? { ...ingredient, nutritionalValues: nutritionalValues } : ingredient,
+        ),
+      }));
+    }
   }
 
   private _stepModel = signal<I_StepListData>({
@@ -290,7 +339,7 @@ export class RecipeForm {
   protected onDeleteStep(index: number) {
     this._stepModel.update((oldSteps) => ({
       ...oldSteps,
-      ingridients: [...oldSteps.steps.slice(0, index), ...oldSteps.steps.slice(index + 1)],
+      steps: [...oldSteps.steps.slice(0, index), ...oldSteps.steps.slice(index + 1)],
     }));
   }
 
@@ -329,16 +378,19 @@ export class RecipeForm {
           .value()
           .steps.map((s) => s.step),
         nutritionalValues: {
-          calories: this._totalNutritionalValues().calories,
-          protein: this._totalNutritionalValues().protein,
-          carbohydrates: this._totalNutritionalValues().carbohydrates,
-          fat: this._totalNutritionalValues().fat,
-          dietaryFiber: this._totalNutritionalValues().dietaryFiber,
+          calories: this.totalNutritionalValues().calories,
+          protein: this.totalNutritionalValues().protein,
+          carbohydrates: this.totalNutritionalValues().carbohydrates,
+          fat: this.totalNutritionalValues().fat,
+          dietaryFiber: this.totalNutritionalValues().dietaryFiber,
         },
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
       const result = await this._recipeStore.addRecipe(recipeObject);
+      if (result) {
+        this._router.navigate(['/recipes']);
+      }
     }
   }
 }
