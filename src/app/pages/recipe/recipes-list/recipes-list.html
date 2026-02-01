@@ -1,6 +1,6 @@
-<section class="container">
+<section class="container-flex">
   <h3 class="">{{ headline() | ucfirst:'all' }}</h3>
-  <div class="container-inner flex flex-wrap mt-3 gap-10">
+  <div class="container-inner flex flex-wrap mt-3 gap-5 ">
     @for (recipe of recipes() ; track recipe.id) {
     <figure class="recipe-card " [routerLink]="['/recipe', recipe?.id]">
       <img [src]="recipe.image ? 'pic/recipes/' + recipe.image : '../pic/placeholder.png'" [alt]="recipe.title">

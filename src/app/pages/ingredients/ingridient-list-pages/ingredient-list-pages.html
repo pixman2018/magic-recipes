@@ -1,19 +1,21 @@
-<section class="container">
+<section class="container-flex">
 
   <div>
     <button (click)="updateAll()" class="p-2 border-1 border-black cursor-pointer">Update</button>
     <button (click)="updateAllRecipies()" class="p-2 border-1 border-black cursor-pointer">Update Recipes</button>
   </div>
-  @if (ingredients()) {
+
   <ul class="leading-6">
     @for(ingredient of ingredients(); track ingredient.id) {
     <li class="flex-between li-even">{{ ingredient.ingredient}} -- {{ ingredient.id}} </li>
     }
+    @empty {
+    <p>Keine Zutaten gefunden.</p>
+    }
   </ul>
-  }
+
 </section>
 
 <pre>
   {{ ingredients | json}}
 </pre>
-koriander

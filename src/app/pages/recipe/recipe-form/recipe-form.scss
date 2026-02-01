@@ -1,28 +1,4 @@
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    sans-serif;
-}
-
-.form-control,
-.step__action {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  font-weight: 500;
-}
+@import '../../../theme/form';
 
 .step__hidden {
   display: none;
@@ -35,3 +11,7 @@ label {
 .dynamic-form-control {
   margin: 1rem 0;
 }
+
+// .step__action {
+//   margin-top: 1rem;
+// }

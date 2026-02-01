@@ -1,25 +1,29 @@
-<button (click)="onShowDropdown()" id="dropdownCheckboxButton" class="cursor-pointer inline-flex items-center justify-center   
-    box-border 
-    bg-transparent  
-    text-black 
-    border-solid border-b-lime-700/50 border-l-lime-700/50 border-l-2 border-b-2 rounded-md 
-    hover:bg-brand-strong focus:ring-4 focus:ring-brand-small shadow-xs  leading-5 rounded-base 
+<button (click)="onShowDropdown()" id="dropdownCheckboxButton" class="cursor-pointer inline-flex items-center justify-center
+    box-border
+    bg-transparent
+    text-black
+    border-solid border-b-lime-700/50 border-l-lime-700/50 border-l-2 border-b-2 rounded-md
+    hover:bg-brand-strong focus:ring-4 focus:ring-brand-small shadow-xs  leading-5 rounded-base
     px-4 py-2.5 focus:outline-none w-[100%]" type="button">
-    {{ title() }}
-    <svg class="w-4 h-4 ms-1.5 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-        fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"
-            class="stroke.black " />
-    </svg>
+  @if(isRequired()) {
+  <span class="required">*&nbsp;</span>
+  }
+  <span>{{ title() }}</span>
+  <svg class="w-4 h-4 ms-1.5 -me-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+    fill="none" viewBox="0 0 24 24">
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"
+      class="stroke.black " />
+  </svg>
 </button>
 
-<div class="space-y-2 pl-2 py-2 bg-transparent  text-lime-700 border-solid border-b-lime-700/50 border-l-lime-700/50 border-l-2 border-b-2 rounded-md"
-    [class.hidden]="showDropdown() === false" [class.block]="showDropdown()">
-    @for (item of items(); track item) {
-    <label class="flex items-center gap-2 text-black cursor-pointer">
-        <input type="checkbox" [checked]="value().includes(item)" (change)="toggleItems(item)"
-            class="accent-lime-700 w-3 h-3 focus:ring-2 focus:ring-lime-soft text-black" />
-        {{ item }}
-    </label>
-    }
+<div
+  class="space-y-2 pl-2 py-2 bg-transparent  text-lime-700 border-solid border-b-lime-700/50 border-l-lime-700/50 border-l-2 border-b-2 rounded-md"
+  [class.hidden]="showDropdown() === false" [class.block]="showDropdown()">
+  @for (item of items(); track item) {
+  <label class="flex items-center gap-2 text-black cursor-pointer">
+    <input type="checkbox" [checked]="value().includes(item)" (change)="toggleItems(item)"
+      class="accent-lime-700 w-3 h-3 focus:ring-2 focus:ring-lime-soft text-black" />
+    {{ item }}
+  </label>
+  }
 </div>

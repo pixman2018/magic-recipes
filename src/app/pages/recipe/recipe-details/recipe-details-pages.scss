@@ -1,3 +1,8 @@
+.recipe-container {
+  // display: flex;
+  // flex-direction: row;
+}
+
 .categories-container li:not(:last-of-type) {
   padding-right: 0.2rem;
   &:after {
@@ -21,3 +26,13 @@ figure img {
 
   padding: 40px;
 }
+
+.container-fix {
+  container: recipe-details-container / inline-size;
+}
+
+// @container ecipe-details-container (max-width: 550px) {
+//   .recipe-container {
+//     flex-direction: column;
+//   }
+// }

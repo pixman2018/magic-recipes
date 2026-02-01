@@ -1,79 +1,80 @@
-<div class="container">
-  <!-- <pre>
-  ingredientFormValid {{ ingredientFormValid() | json}}
-  {{ ingridientForm()?.invalid()}}
-  {{ ingridientForm()?.invalid() && !ingredientFormValid() }}
-</pre> -->
+<div class="container-flex p-0">
+
   <lib-stepper>
     <lib-step [currentStep]="currentStep">
       <ng-template #legend>
         <div>Allgemein</div>
       </ng-template>
 
-      <form id="step_1" class="step__hidden" [class.step__show]="currentStep() === 1">
-        <div class="grid-container">
-          <div class="form-control row-50">
+      <form id="step_1" class="step__hidden p-0" [class.step__show]="currentStep() === 1">
+        <div class="form-container ">
+          <div class="form-group width-50">
             <label for="title" class="">
-              Titel
-              <input [formField]="generalRecipeForm.title" type="text" id="title" placeholder="Titel"
-                class="formControl" />
+              <span class="required">*&nbsp;</span><span>Titel</span>
             </label>
+            <input [formField]="generalRecipeForm.title" type="text" id="title" placeholder="Titel"
+              class="formControl" />
+
             <lib-error-message [control]="generalRecipeForm.title" />
           </div>
 
-          <div class="form-control row-50">
-            <label for="title" class="">
-              Cover
-              <input [formField]="generalRecipeForm.image" type="text" id="image" placeholder="Cover URL"
-                class="formControl" />
+          <div class="form-group width-50">
+            <label for="image" class="">
+              <span>Cover</span>
             </label>
+            <input [formField]="generalRecipeForm.image" type="text" id="image" placeholder="Cover URL"
+              class="formControl" />
+
           </div>
         </div>
 
-        <div class="grid-container">
-          <div class="form-control w-[100%]">
-            <label for="title" class="">
-              Beschreibung
-              <textarea [formField]="generalRecipeForm.text" id="text" placeholder="Beschreibung" class="formControl"
-                cols="4"></textarea>
-            </label>
+        <div class="form-container">
+          <div class="form-group width-100">
+            <label for="text" class="">
+              <span class="required">*&nbsp;</span><span>Beschreibung</span></label>
+            <textarea [formField]="generalRecipeForm.text" id="text" placeholder="Beschreibung" class="formControl"
+              cols="4"></textarea>
+
             <lib-error-message [control]="generalRecipeForm.text" />
           </div>
         </div>
 
-        <div class="grid-container flex items-start">
-          <div class="form-control row-25">
-            <label for="title" class="">
-              Schwierigkeitsgrad
-              <input [formField]="generalRecipeForm.levelOfDifficulty" type="number" id="levelOfDifficulty"
-                placeholder="1-3" class="formControl" />
+        <div class="form-container flex items-start">
+          <div class="form-group width-25">
+            <label for="levelOfDifficulty" class="">
+              <span class="required">*&nbsp;</span><span>Schwierikeitsgrad</span>
             </label>
+            <input [formField]="generalRecipeForm.levelOfDifficulty" type="number" id="levelOfDifficulty"
+              placeholder="1-3" class="formControl" />
+
             <lib-error-message [control]="generalRecipeForm.levelOfDifficulty" />
           </div>
 
 
-          <div class="form-control row-25">
-            <label for="title" class="">
-              Kochzeit
-              <input [formField]="generalRecipeForm.cookingTime" type="number" id="cookingTime" placeholder="Kochzeit"
-                class="formControl" />
+          <div class="form-group width-25">
+            <label for="cookingTime" class="">
+              <span class="required">*&nbsp;</span><span>Kochzeit</span>
             </label>
+            <input [formField]="generalRecipeForm.cookingTime" type="number" id="cookingTime" placeholder="Kochzeit"
+              class="formControl" />
+
             <lib-error-message [control]="generalRecipeForm.cookingTime" />
           </div>
 
-          <div class="form-control row-25">
-            <label for="title" class="">
-              Vorbereitungszeit
-              <input [formField]="generalRecipeForm.preparationTime" type="number" id="preparationTime"
-                placeholder="Vorbereitungszeit" class="formControl" />
+          <div class="form-group width-25">
+            <label for="preparationTime" class="">
+              <span class="required">*&nbsp;</span><span>Vorbereitungszeit</span>
             </label>
+            <input [formField]="generalRecipeForm.preparationTime" type="number" id="preparationTime"
+              placeholder="Vorbereitungszeit" class="formControl" />
+
             <lib-error-message [control]="generalRecipeForm.preparationTime" />
           </div>
 
 
-          <div class="form-control row-25 mt-7">
+          <div class="form-group  dropdown-group width-25">
             <lib-dropdown-checkbox [formField]="generalRecipeForm.categories" [items]="recipiesCategories"
-              title="Kategorie" />
+              [isRequired]="true" title="Kategorie" />
           </div>
         </div>
 
@@ -106,27 +107,29 @@
       @for (ingridientForm of ingridientForm.ingredients; let index = $index; track index; let last = $last) {
 
       <form [id]="'step_2' + index" class="step__hidden" [class.step__show]="currentStep() === 2">
-        <div class="grid-container flex items-start">
+        <div class="form-container  items-start">
 
-          <div class="form-control row-25">
+          <div class="form-group width-25">
             <label [for]="'unit' + index" class="">
-              Gewicht
-              <input [formField]="ingridientForm.unit" type="number" [id]="'unit' + index" placeholder="Gewicht"
-                class="formControl" />
+              <span class="required">*&nbsp;</span><span>Gewicht</span>
             </label>
+            <input [formField]="ingridientForm.unit" type="number" [id]="'unit' + index" placeholder="Gewicht"
+              class="formControl" />
+
             <lib-error-message [control]="ingridientForm.unit" />
           </div>
 
           <lib-dropdown [id]="'unitOfmeasurement' + index" [formField]="ingridientForm.unitOfmeasurement"
-            [items]="unitOfmeasurements" title="Gewichteinheit" class="form-control row-25" />
+            [isRequired]="true" [items]="unitOfmeasurements" title="Gewichteinheit" class="form-group width-25 mt-7" />
 
 
-          <div class="form-control row-50">
+          <div class="form-group width-50">
             <label [for]="'ingridient' + index" class="">
-              Zutat
-              <input [formField]="ingridientForm.ingredient" type="text" [id]="'ingredient' + index" placeholder="Zutat"
-                class="formControl" (input)="onAddAndCheckIngredient(ingridientForm, index)" />
+              <span class="required">*&nbsp;</span><span>Zutat</span>
             </label>
+            <input [formField]="ingridientForm.ingredient" type="text" [id]="'ingredient' + index" placeholder="Zutat"
+              class="formControl" (input)="onAddAndCheckIngredient(ingridientForm, index)" />
+
             <lib-error-message [control]="ingridientForm.ingredient" />
           </div>
         </div>
@@ -168,13 +171,14 @@
 
       @for(stepForm of stepForm.steps; let index = $index; track index) {
       <form [id]="'step_3' + index" class="step__hidden" [class.step__show]="currentStep() === 3">
-        <div class="grid-container">
-          <div class="form-control row-100">
+        <div class="form-group">
+          <div class="form-group width-100">
             <label for="title" class="">
               {{index + 1}}. Schritt
-              <textarea [formField]="stepForm.step" type="text" [id]="'step' + index" cols="4" placeholder="Schritt"
-                class="formControl" (keydown.enter)="onCheckStepValue()" (change)="onCheckStepValue()"></textarea>
             </label>
+            <textarea [formField]="stepForm.step" type="text" [id]="'step' + index" cols="4" placeholder="Schritt"
+              class="formControl " (keydown.enter)="onCheckStepValue()" (change)="onCheckStepValue()"></textarea>
+
             <lib-error-message [control]="stepForm.step" />
           </div>
         </div>

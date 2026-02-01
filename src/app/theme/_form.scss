@@ -1,0 +1,78 @@
+@import '../theme/variable';
+
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.form-control,
+.step__action {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+label {
+  font-weight: 500;
+}
+
+label:not(.inline) {
+  display: flex;
+  // flex-direction: column;
+  // gap: 0.25rem;
+}
+
+.disabled {
+  opacity: 0.6;
+}
+
+.required {
+  color: var(--color-red-500);
+}
+
+.form-control,
+.form-group {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.form-group.width-25 {
+  grid-column: span 1;
+}
+
+.form-group.width-50 {
+  grid-column: span 2;
+}
+
+.form-group.width-100 {
+  grid-column: span 4;
+}
+
+@media (min-width: #{$tabletWidth}) {
+  .form-container {
+    grid-template-columns: repeat(2, 1fr); /* Tablet: 2 Spalten */
+  }
+
+  .dropdown-group {
+    margin-top: 1.75rem;
+  }
+}
+
+@media (min-width: #{$desctopWidth}) {
+  .form-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

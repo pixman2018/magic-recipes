@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'app/theme/variable';
 
 // allows the user to manually switch to dark mode
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
@@ -12,6 +13,8 @@
   --color-mint-500: oklch(0.4 0.11 200);
   --black-o-125: rgba(0, 0, 0, 0.125);
   --color-blackGray: rgb(15, 15, 20);
+
+  --marginLayout: 1.25rem;
 }
 
 @utility flex-center {
@@ -27,6 +30,10 @@
 }
 
 @layer components {
+  body {
+    @apply text-xl;
+  }
+
   h1,
   h2,
   h3 {
@@ -42,12 +49,40 @@
     font-size: 26px;
   }
 
-  body {
-    @apply text-xl;
+  /*
+  *****
+  ***
+  * layout
+  ***
+  *****
+  */
+  .container-flex {
+    margin: auto;
+    padding: 0 var(--marginLayout);
+    width: 90vw;
+    max-width: 1600px;
   }
 
-  .container {
-    @apply max-w-[1600px] mx-auto;
+  .container-fix {
+    margin: 0 auto;
+    padding: 0 var(--marginLayout);
+    max-width: 900px;
+  }
+
+  .row-50 {
+    width: 50%;
+  }
+
+  .row-100 {
+    width: 100%;
+  }
+
+  .row-33 {
+    width: calc(100% / 3);
+  }
+
+  .row-25 {
+    width: 25%;
   }
 
   .elemM {
@@ -58,6 +93,13 @@
     @apply flex ml-auto;
   }
 
+  /*
+  *****
+  ***
+  * list
+  ***
+  *****
+  */
   .li-odd {
     @apply p-2 odd:bg-lime-700/10;
   }
@@ -138,30 +180,21 @@
   }
 }
 
-// LAyout
+// Layout
 .grid-container {
   display: flex;
-  gap: 4rem;
+  flex-direction: column;
+  gap: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-.row-50 {
-  width: 50%;
-}
-
-.row-100 {
-  width: 100%;
-}
-
-.row-33 {
-  width: calc(100% / 3);
-}
-
-.row-25 {
-  width: 25%;
-}
-
-.disabled {
-  opacity: 0.6;
+@media (var(--tabletWidth)) {
+  .grid-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .form-control {
+    width: 100%;
+  }
 }

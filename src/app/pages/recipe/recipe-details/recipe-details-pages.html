@@ -1,6 +1,6 @@
 @if (recipe()) {
 
-<section class="w-[800px] mx-auto">
+<section class="container-fix">
 
   <figure class=" mx-auto">
     <img [src]="recipe()?.image ? 'pic/recipes/' + recipe()?.image : '../pic/placeholder.png'" [alt]="recipe()?.title"

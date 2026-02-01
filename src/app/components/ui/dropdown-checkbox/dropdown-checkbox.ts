@@ -5,12 +5,17 @@ import { FormValueControl } from '@angular/forms/signals';
   selector: 'lib-dropdown-checkbox',
   imports: [],
   templateUrl: './dropdown-checkbox.html',
-  styles: ``,
+  styles: [
+    `
+      @import '../../../theme/_form';
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownCheckbox implements FormValueControl<string[]> {
   title = input.required();
   items = input.required<string[]>();
+  isRequired = input<boolean>(false);
   public value = model<string[]>([]);
   protected showDropdown = signal<boolean>(false);
 

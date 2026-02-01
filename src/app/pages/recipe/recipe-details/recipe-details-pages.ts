@@ -113,6 +113,7 @@ export class RecipeDetails {
   private async _getRecipe() {
     const id = this._route.snapshot.paramMap.get('id');
     if (!id) {
+      console.error('No recipe ID found');
       return;
     }
     try {

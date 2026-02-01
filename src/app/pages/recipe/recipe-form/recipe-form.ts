@@ -190,7 +190,6 @@ export class RecipeForm {
       this._ingridientModel.update((currentIngredient) => ({
         ...currentIngredient,
         ingredients: [
-          ...currentIngredient.ingredients,
           ingredient ?? {
             unit: 0,
             unitOfmeasurement: '',
@@ -198,6 +197,7 @@ export class RecipeForm {
             spices: false,
             ingredientId: '',
           },
+          ...currentIngredient.ingredients,
         ],
       }));
     }
@@ -217,10 +217,9 @@ export class RecipeForm {
     ingredientField: FieldTree<I_IngridientData, number>,
     index: number,
   ) {
-    // Kurzer Microtask-Wait, damit das Signal den Wert vom Template sicher übernommen hat
+    // Wait briefly to ensure the signal has received the value.
     await Promise.resolve();
     const ingredientValue = ingredientField.ingredient().value();
-    console.log('formvalue', ingredientValue);
 
     if (!ingredientValue || ingredientValue.length < 3) {
       this.ingredientFormValid.set(false);
@@ -298,14 +297,6 @@ export class RecipeForm {
   }
 
   private setAllNutritionalValues(nutritionalValues: I_NutritionalValues, index: number): void {
-    // this._totalNutritionalValues.update((currentNutritionalValues) => ({
-    //   ...currentNutritionalValues,
-    //   calories: (currentNutritionalValues.calories += nutritionalValues.calories),
-    //   protein: (currentNutritionalValues.protein += nutritionalValues.protein),
-    //   carbohydrates: (currentNutritionalValues.carbohydrates += nutritionalValues.carbohydrates),
-    //   fat: (currentNutritionalValues.fat += nutritionalValues.fat),
-    //   dietaryFiber: (currentNutritionalValues.dietaryFiber += nutritionalValues.dietaryFiber),
-    // }));
     if (nutritionalValues) {
       this._ingridientModel.update((currentIngredient) => ({
         ...currentIngredient,
@@ -328,18 +319,20 @@ export class RecipeForm {
   });
 
   protected onAddStep(step?: I_StepData) {
-    if (this.stepForm.steps().valid()) {
-      this._stepModel.update((oldSteps) => ({
-        ...oldSteps,
-        steps: [...oldSteps.steps, step ?? { step: '' }],
+    console.log(this.stepForm.steps().valid() || this.stepForm.steps().value().length === 0);
+    if (this.stepForm.steps().valid() || this.stepForm.steps().value().length === 0) {
+      this._stepModel.update((currentSteps) => ({
+        ...currentSteps,
+        steps: [step ?? { step: '' }, ...currentSteps.steps],
       }));
+      console.log(this._stepModel());
     }
   }
 
   protected onDeleteStep(index: number) {
-    this._stepModel.update((oldSteps) => ({
-      ...oldSteps,
-      steps: [...oldSteps.steps.slice(0, index), ...oldSteps.steps.slice(index + 1)],
+    this._stepModel.update((currentSteps) => ({
+      ...currentSteps,
+      steps: [...currentSteps.steps.slice(0, index), ...currentSteps.steps.slice(index + 1)],
     }));
   }
 

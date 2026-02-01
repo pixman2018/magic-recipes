@@ -1,85 +1,90 @@
-<div class="form-container">
-  <form id="ingredientForm">
-    <div class="grid-container">
-      <div class="ingredient-text">
-        Bitte alle Angaben in 100g eintragen.
-      </div>
-      <div class="form-control row-50">
-        <label for="ingredient" class="">
-          Zutat
-          <input [formField]="indredientForm.ingredient" type="text" id="ingredient" placeholder="Zutat"
-            class="formControl disabled" />
-        </label>
-        <lib-error-message [control]="indredientForm.ingredient" />
-      </div>
+<form id="ingredientForm">
+  <div class="ingredient-text">
+    Bitte alle Angaben in 100g eintragen.
+  </div>
+  <div class="form-container">
 
-      <div class="form-control row-50">
-        <label for="calories" class="">
-          Kalorien (kcal)
-          <input [formField]="indredientForm.calories" type="number" id="calories" placeholder="Kalorien (kcal)"
-            class="formControl" />
-        </label>
-        <lib-error-message [control]="indredientForm.calories" />
-      </div>
+    <div class="form-group  width-50">
+      <label for="ingredient" class="">
+        <span class="required">*&nbsp;</span><span>Zutat</span>
+      </label>
+      <input [formField]="indredientForm.ingredient" type="text" id="ingredient" placeholder="Zutat"
+        class="formControl disabled" />
+
+      <lib-error-message [control]="indredientForm.ingredient" />
     </div>
 
-    <div class="grid-container">
-      <div class="form-control row-50">
-        <label for="protein" class="">
-          Protein
-          <input [formField]="indredientForm.protein" type="number" id="protein" placeholder="Protein"
-            class="formControl" />
-        </label>
-        <lib-error-message [control]="indredientForm.protein" />
-      </div>
+    <div class="form-group  width-50">
+      <label for="calories" class="">
+        <span class="required">*&nbsp;</span><span>Kalorien (kcal)</span>
+      </label>
+      <input [formField]="indredientForm.calories" type="number" id="calories" placeholder="Kalorien (kcal)"
+        class="formControl" />
 
-      <div class="form-control row-50">
-        <label for="carbohydrates" class="">
-          Kohlenhydrate
-          <input [formField]="indredientForm.carbohydrates" type="number" id="carbohydrates" placeholder="Kohlenhydrate"
-            class="formControl" />
-        </label>
-        <lib-error-message [control]="indredientForm.carbohydrates" />
-      </div>
+      <lib-error-message [control]="indredientForm.calories" />
+    </div>
+  </div>
 
+  <div class="form-container">
+    <div class="form-group  width-50">
+      <label for="protein" class="">
+        <span class="required">*&nbsp;</span><span>Protein</span>
+      </label>
+      <input [formField]="indredientForm.protein" type="number" id="protein" placeholder="Protein"
+        class="formControl" />
 
+      <lib-error-message [control]="indredientForm.protein" />
     </div>
 
-    <div class="grid-container">
-      <div class="form-control row-50">
-        <label for="fat" class="">
-          Fett
-          <input [formField]="indredientForm.fat" type="number" id="fat" placeholder="Fett" class="formControl" />
-        </label>
-        <lib-error-message [control]="indredientForm.fat" />
-      </div>
+    <div class="form-group  width-50">
+      <label for="carbohydrates" class="">
+        <span class="required">*&nbsp;</span><span>Kohlenhydrate</span>
+      </label>
+      <input [formField]="indredientForm.carbohydrates" type="number" id="carbohydrates" placeholder="Kohlenhydrate"
+        class="formControl" />
 
-      <div class="form-control row-50">
-        <label for="dietaryFiber" class="">
-          Ballaststoffe
-          <input [formField]="indredientForm.dietaryFiber" type="number" id="dietaryFiber" placeholder="Ballaststoffe"
-            class="formControl" />
-        </label>
-        <lib-error-message [control]="indredientForm.dietaryFiber" />
-      </div>
+      <lib-error-message [control]="indredientForm.carbohydrates" />
     </div>
 
-    <div class="grid-container">
-      <div class="form-control row-50">
-        <div class="checkbox-group">
-          <label>Geürze
-            <input type="checkbox" [formField]="indredientForm.isSpices"
-              class="ml-1 outline-lime-700 outline-1 accent-lime-700 checked:text-white">
-          </label>
-        </div>
-      </div>
+
+  </div>
+
+  <div class="form-container">
+    <div class="form-group  width-50">
+      <label for="fat" class="">
+        <span class="required">*&nbsp;</span><span>Fett</span>
+      </label>
+      <input [formField]="indredientForm.fat" type="number" id="fat" placeholder="Fett" class="formControl" />
+
+      <lib-error-message [control]="indredientForm.fat" />
     </div>
 
-    <div class="">
-      <button type="button" class="btn btn-ghost-primary w-[100px] flex justify-center ml-auto" (click)="onSubmit()"
-        [disabled]="indredientForm().invalid()" [class.disabled]="indredientForm().invalid()">
-        Speichern
-      </button>
+    <div class="form-group  width-50">
+      <label for="dietaryFiber" class="">
+        <span class="required">*&nbsp;</span><span>Ballaststoffe</span>
+      </label>
+      <input [formField]="indredientForm.dietaryFiber" type="number" id="dietaryFiber" placeholder="Ballaststoffe"
+        class="formControl" />
+
+      <lib-error-message [control]="indredientForm.dietaryFiber" />
     </div>
-  </form>
-</div>
+  </div>
+
+  <div class="form-container">
+    <div class="form-group  checkbox-group width-25">
+
+      <label class="inline">Geürze
+        <input type="checkbox" [formField]="indredientForm.isSpices"
+          class="ml-1 outline-lime-700 outline-1 accent-lime-700 checked:text-white">
+      </label>
+    </div>
+
+  </div>
+
+  <div class="mb-4">
+    <button type="button" class="btn btn-ghost-primary w-[100px] flex justify-center ml-auto" (click)="onSubmit()"
+      [disabled]="indredientForm().invalid()" [class.disabled]="indredientForm().invalid()">
+      Speichern
+    </button>
+  </div>
+</form>

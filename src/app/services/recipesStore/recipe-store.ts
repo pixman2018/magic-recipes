@@ -102,9 +102,15 @@ export class RecipeStore {
     }));
   }
 
-  public addRecipe(recipe: I_Recipe): Promise<DocumentReference<DocumentData, DocumentData>> {
+  public async addRecipe(recipe: I_Recipe): Promise<DocumentReference<DocumentData, DocumentData>> {
     this._setRecipes(recipe);
-    return addDoc(this._recipesColRef, recipe);
+    const docRef = await addDoc(this._recipesColRef, recipe);
+    const recipeWithId: I_Recipe = {
+      ...recipe,
+      id: docRef.id,
+    };
+    this._setRecipes(recipeWithId);
+    return docRef;
   }
 
   public updateRecipe(recipe: I_Recipe, id: string) {
