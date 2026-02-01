@@ -1,6 +1,7 @@
 <div class="container-flex p-0">
 
-  <lib-stepper>
+  <lib-stepper [hasRequireField]="true" (backToIndex)="onBackToIndex($event)">
+
     <lib-step [currentStep]="currentStep">
       <ng-template #legend>
         <div>Allgemein</div>
@@ -186,13 +187,18 @@
       }
     </lib-step>
 
-    @if (currentStep() === 3 && generalRecipeForm().valid() && ingridientForm().valid() && stepForm().valid() &&
-    isLastStepValid()) {
+
     <div class="step__action">
-      <button type="button" class="btn btn-primary w-[100px] flex justify-center ml-auto" (click)="onSubmit()">
+      @if (currentStep() === 3 && generalRecipeForm().valid() && ingridientForm().valid() && stepForm().valid() &&
+      isLastStepValid()) {
+      <button type="button" class="btn btn-primary w-[150px] flex justify-center ml-auto" (click)="onSubmit()">
         Anlegen
       </button>
+      }
+      <button type="button" class="btn btn-danger w-[150px] flex justify-center ml-auto mt-4" (click)="onReset()">
+        Zurücksetzen
+      </button>
     </div>
-    }
+
   </lib-stepper>
 </div>

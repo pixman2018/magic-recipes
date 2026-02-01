@@ -4,6 +4,8 @@ import {
   Component,
   contentChildren,
   effect,
+  input,
+  output,
   signal,
   TemplateRef,
 } from '@angular/core';
@@ -66,8 +68,12 @@ import { JsonPipe } from '@angular/common';
 export class Stepper implements AfterContentInit {
   private _legendTemplates = contentChildren<TemplateRef<any>>('legend', { descendants: true });
   private _stepComponentRef = contentChildren<Step>(Step);
-  protected legendValues: string[] = [];
+
+  public hasRequireField = input<boolean>(true);
+  public backToIndex = output<number>();
   protected currentStepIndex = signal(0);
+
+  protected legendValues: string[] = [];
 
   constructor() {
     effect(() => {
@@ -88,6 +94,12 @@ export class Stepper implements AfterContentInit {
       for (let i = 1; i <= this._stepComponentRef().length; i++) {
         this.legendValues.push('');
       }
+    }
+  }
+
+  protected onBackToIndex(index: number) {
+    if (this.currentStepIndex() > index) {
+      this.backToIndex.emit(index);
     }
   }
 }

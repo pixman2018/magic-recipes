@@ -127,6 +127,18 @@ export class RecipeForm {
     });
   }
 
+  protected onReset(): void {
+    this._generalRecipeModel.set(this._getRecipeFormObj());
+    this._ingridientModel.set({ ingredients: [] });
+    this._stepModel.set({ steps: [] });
+  }
+
+  protected onBackToIndex(index: number) {
+    if (this.currentStep() > index) {
+      this.currentStep.set(index);
+    }
+  }
+
   protected onNextStep() {
     this.currentStep.update((value) => value + 1);
   }
@@ -135,15 +147,19 @@ export class RecipeForm {
     this.currentStep.update((value) => value - 1);
   }
 
-  private _generalRecipeModel = signal<I_GeneralRecipeData>({
-    title: '',
-    text: '',
-    image: '',
-    levelOfDifficulty: 0,
-    cookingTime: 0,
-    preparationTime: 0,
-    categories: [],
-  });
+  private _generalRecipeModel = signal<I_GeneralRecipeData>(this._getRecipeFormObj());
+
+  private _getRecipeFormObj(): I_GeneralRecipeData {
+    return {
+      title: '',
+      text: '',
+      image: '',
+      levelOfDifficulty: 0,
+      cookingTime: 0,
+      preparationTime: 0,
+      categories: [],
+    };
+  }
 
   protected generalRecipeForm = form(this._generalRecipeModel, (schemaPath) => {
     required(schemaPath.title, { message: 'Bitte gebe den Titel an.' });
@@ -189,16 +205,7 @@ export class RecipeForm {
       this.ingredientFormValid.set(false);
       this._ingridientModel.update((currentIngredient) => ({
         ...currentIngredient,
-        ingredients: [
-          ingredient ?? {
-            unit: 0,
-            unitOfmeasurement: '',
-            ingredient: '',
-            spices: false,
-            ingredientId: '',
-          },
-          ...currentIngredient.ingredients,
-        ],
+        ingredients: [ingredient ?? this._setIngredientObj(), ...currentIngredient.ingredients],
       }));
     }
   }
@@ -211,6 +218,10 @@ export class RecipeForm {
         ...oldIngridients.ingredients.slice(index + 1),
       ],
     }));
+  }
+
+  private _setIngredientObj(): I_IngridientData {
+    return { unit: 0, unitOfmeasurement: '', ingredient: '', spices: false, ingredientId: '' };
   }
 
   protected async onAddAndCheckIngredient(

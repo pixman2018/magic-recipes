@@ -116,6 +116,12 @@
     &.btn-ghost-primary {
       @apply border-solid  border-lime-700 border-1;
     }
+    &.btn-danger {
+      @apply border-solid  border-red-500 bg-red-500/80 text-black;
+    }
+    &.btn-ghost-danger {
+      @apply border-solid  border-red-500;
+    }
   }
 
   .clip {
