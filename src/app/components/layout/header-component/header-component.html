@@ -1,12 +1,12 @@
 <header class="bg-gray-900 py-1">
-  <div class="container flex sm:align-center justify-between p-4 flex-row sm:flex-row-reverse">
+  <div class="container-flex flex sm:align-center justify-between p-4 flex-row sm:flex-row-reverse">
     <app-toogle-theme />
     <app-main-nav class="component" (handleShowSearch)="onShowSearch($event)"></app-main-nav>
   </div>
 
   @if (navigationOptions.showSearchbar) {
-  <div class="search-filter-container container p-4 pt-0  flex justify-between items-center">
-    <app-search-bar [navigationOptions]="navigationOptions" class="w-[100%]" />
+  <div class="search-filter-container   container-flex p-4 pt-0  flex justify-between items-center">
+    <app-search-bar [navigationOptions]="navigationOptions" class="w-[80%]" />
     <app-filter [navigationOptions]="navigationOptions" />
   </div>
   }

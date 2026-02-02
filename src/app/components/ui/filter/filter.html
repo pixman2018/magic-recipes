@@ -5,7 +5,7 @@
     border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer text-white focus:text-white text-white/50">
     <option value="all" disabled selected hidden>Kategorie</option>
     @for (recipiesCategory of recipiesCategories; let index = $index; track $index) {
-    <option [value]="recipiesCategory">{{ recipiesCategory }}</option>
+    <option [value]="recipiesCategory">{{ recipiesCategory | ucfirst }}</option>
     }
   </select>
 </div>

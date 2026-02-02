@@ -4,11 +4,12 @@ import recipiesCategories from '../../../../../data/recipiesCategories.json';
 import { I_NavigationOptions } from '../../../models/options.model';
 import { FilterService } from './filterService/filter';
 import { RecipeStore } from '../../../services/recipesStore/recipe-store';
+import { UcfirstPipe } from '../../../shared/pipes/ucFirst/ucfirst.pipe';
 
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [],
+  imports: [UcfirstPipe],
   templateUrl: './filter.html',
   styleUrl: './filter.scss',
 })
