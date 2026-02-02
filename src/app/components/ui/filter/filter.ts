@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 // data
 import recipiesCategories from '../../../../../data/recipiesCategories.json';
+import { I_NavigationOptions } from '../../../models/options.model';
+import { FilterService } from './filterService/filter';
+import { RecipeStore } from '../../../services/recipesStore/recipe-store';
 
 @Component({
   selector: 'app-filter',
@@ -10,9 +13,16 @@ import recipiesCategories from '../../../../../data/recipiesCategories.json';
   styleUrl: './filter.scss',
 })
 export class FilterComponent {
+  private _filterService = inject(FilterService);
+  private _recipeStore = inject(RecipeStore);
+  public navigationOptions = input.required<I_NavigationOptions>();
   protected recipiesCategories: string[] = recipiesCategories;
 
-  protected onChangeCategory(category: any) {
-    console.log(category);
+  protected onChangeFilter(filter: any) {
+    this._filterService.filterbject.set({
+      filter: filter,
+      pageName: this.navigationOptions().pagename ?? '',
+    });
+    this._recipeStore._getAllRecipes();
   }
 }

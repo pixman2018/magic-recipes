@@ -7,9 +7,9 @@
   @if (navigationOptions.showSearchbar) {
   <div class="search-filter-container container p-4 pt-0  flex justify-between items-center">
     <app-search-bar [navigationOptions]="navigationOptions" class="w-[100%]" />
-    <app-filter />
+    <app-filter [navigationOptions]="navigationOptions" />
   </div>
   }
 </header>
 
-<app-filter />
+<app-filter [navigationOptions]="navigationOptions" />

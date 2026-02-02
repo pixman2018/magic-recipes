@@ -76,7 +76,10 @@ export class MainNavComponent implements OnInit {
    *
    */
   protected onShowSearchbar(show: boolean, pagename: string): void {
-    this.onHiddenNav();
+    if (this.isMobile) {
+      this.onHiddenNav();
+    }
+
     this.handleShowSearch.emit({ showSearchbar: show, pagename });
   }
 

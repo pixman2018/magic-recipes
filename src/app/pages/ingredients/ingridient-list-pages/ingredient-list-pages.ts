@@ -32,7 +32,9 @@ export class IngredientListPage {
   protected recipes: Signal<I_Recipe[]> = this._recipesStore.recipes;
 
   constructor() {
-    effect(() => {});
+    effect(() => {
+      this.ingredients = this._ingredientsStore.ingredients;
+    });
   }
 
   updateAll() {

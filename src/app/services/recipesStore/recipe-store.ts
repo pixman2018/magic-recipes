@@ -1,4 +1,12 @@
-import { effect, inject, Injectable, resource, Signal, signal } from '@angular/core';
+import {
+  effect,
+  inject,
+  Injectable,
+  resource,
+  Signal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import {
   addDoc,
   collection,
@@ -20,12 +28,14 @@ import {
 import { I_Recipe } from '../../models/recipe.model';
 import { SchemaPath, validateAsync } from '@angular/forms/signals';
 import { SearchService } from '../../components/ui/search-bar/searchService/search.service';
+import { FilterService } from '../../components/ui/filter/filterService/filter';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecipeStore {
   private _searchService = inject(SearchService);
+  private _filterService = inject(FilterService);
   private _firestore = inject(Firestore);
   private _table = 'recipes';
   private _recipesColRef = collection(this._firestore, this._table);
@@ -33,43 +43,54 @@ export class RecipeStore {
 
   constructor() {
     // Automatically responds to every change in SearchService
-    effect(() => {
-      const search = this._searchService.searchQueryObject();
-      // Only search if we are on the recipe page or the search is empty
-      if (!search || search.pageName === 'recipe') {
-        this._getAllRecipes();
-      }
-    });
+    // effect(() => {
+    //   const search = this._searchService.searchQueryObject();
+    //   const filter = this._filterService.filterbject();
+    //   // Only search if we are on the recipe page or the search and filter is empty
+    //   if (!search || !filter || search.pageName === 'recipe') {
+    //     console.log('init');
+    //     this._getAllRecipes();
+    //   }
+    // });
   }
 
   public get recipes(): Signal<I_Recipe[]> {
     return this._recipes.asReadonly();
   }
 
-  public async _getAllRecipes(category: string = 'all') {
+  public async _getAllRecipes(category: string = 'all', like: boolean = false) {
     const searchTerm = this._searchService.searchQueryObject()?.searchQuery.toLowerCase();
+    const filterTerm = this._filterService.filterbject()?.filter;
     const constraints: QueryConstraint[] = [];
 
-    if (category && category !== 'all') {
-      constraints.push(where('category', '==', category));
+    if (filterTerm === 'like') {
+      constraints.push(where('like', '==', true));
+    } else if (filterTerm && filterTerm !== 'all') {
+      category = filterTerm;
     }
-
-    if (searchTerm && searchTerm.trim() !== '') {
-      // constraints.push(orderBy('title'));
-      // constraints.push(startAt(searchTerm));
-      // constraints.push(endAt(searchTerm + '\uf8ff'));
-      constraints.push(where('searchKeys', 'array-contains', searchTerm));
-    }
-
-    const q = query(this._recipesColRef, ...constraints);
 
     try {
-      const snapshot = await getDocs(q);
+      if (searchTerm && searchTerm.trim() !== '') {
+        constraints.push(where('searchKeys', 'array-contains', searchTerm));
+      }
 
-      const data = snapshot.docs.map((doc) => ({
+      if (like) {
+        constraints.push(where('like', '==', true));
+      }
+
+      const q = query(this._recipesColRef, ...constraints);
+      const snapshot = await getDocs(q);
+      // map data
+      let data = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...(doc.data() as I_Recipe),
       }));
+
+      // save client-side filter
+      if (category && category !== 'all') {
+        data = data.filter((recipe) => recipe.categories && recipe.categories.includes(category));
+      }
+      // update signal
       this._recipes.set(data);
       return data;
     } catch (error) {
