@@ -5,6 +5,10 @@ export interface I_IngredientInRecipe {
   ingredient: string;
 }
 
+export interface I_IngredientInShoppiungList extends I_IngredientInRecipe {
+  isAvailable: boolean;
+}
+
 export interface I_Ingredient {
   id?: string;
   image?: string;

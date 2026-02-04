@@ -16,6 +16,10 @@ export class HomePage {
   protected recipes = this._recipeStore.recipes;
 
   constructor() {
-    this._recipeStore._getAllRecipes();
+    try {
+      this._recipeStore._getAllRecipes();
+    } catch (error) {
+      console.error('Fehler beim Laden der Rezepte:', error);
+    }
   }
 }

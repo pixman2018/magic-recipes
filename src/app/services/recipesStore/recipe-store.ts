@@ -1,34 +1,26 @@
-import {
-  effect,
-  inject,
-  Injectable,
-  resource,
-  Signal,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { inject, Injectable, resource, Signal, signal } from '@angular/core';
+import { SchemaPath, validateAsync } from '@angular/forms/signals';
+// firestore
 import {
   addDoc,
   collection,
   doc,
   DocumentData,
   DocumentReference,
-  endAt,
   Firestore,
   getDoc,
   getDocs,
-  orderBy,
   query,
   QueryConstraint,
-  startAt,
   updateDoc,
   where,
   writeBatch,
 } from '@angular/fire/firestore';
-import { I_Recipe } from '../../models/recipe.model';
-import { SchemaPath, validateAsync } from '@angular/forms/signals';
+import { convertSnap, convertSnaps } from '../../shared/data access/db-until';
+// services, models
 import { SearchService } from '../../components/ui/search-bar/searchService/search.service';
 import { FilterService } from '../../components/ui/filter/filterService/filter';
+import { I_Recipe } from '../../models/recipe.model';
 
 @Injectable({
   providedIn: 'root',
@@ -37,22 +29,11 @@ export class RecipeStore {
   private _searchService = inject(SearchService);
   private _filterService = inject(FilterService);
   private _firestore = inject(Firestore);
-  private _table = 'recipes';
-  private _recipesColRef = collection(this._firestore, this._table);
+
   private _recipes = signal<I_Recipe[]>([]);
 
-  constructor() {
-    // Automatically responds to every change in SearchService
-    // effect(() => {
-    //   const search = this._searchService.searchQueryObject();
-    //   const filter = this._filterService.filterbject();
-    //   // Only search if we are on the recipe page or the search and filter is empty
-    //   if (!search || !filter || search.pageName === 'recipe') {
-    //     console.log('init');
-    //     this._getAllRecipes();
-    //   }
-    // });
-  }
+  private _table = 'recipes';
+  private _recipesColRef = collection(this._firestore, this._table);
 
   public get recipes(): Signal<I_Recipe[]> {
     return this._recipes.asReadonly();
@@ -69,34 +50,26 @@ export class RecipeStore {
       category = filterTerm;
     }
 
-    try {
-      if (searchTerm && searchTerm.trim() !== '') {
-        constraints.push(where('searchKeys', 'array-contains', searchTerm));
-      }
-
-      if (like) {
-        constraints.push(where('like', '==', true));
-      }
-
-      const q = query(this._recipesColRef, ...constraints);
-      const snapshot = await getDocs(q);
-      // map data
-      let data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...(doc.data() as I_Recipe),
-      }));
-
-      // save client-side filter
-      if (category && category !== 'all') {
-        data = data.filter((recipe) => recipe.categories && recipe.categories.includes(category));
-      }
-      // update signal
-      this._recipes.set(data);
-      return data;
-    } catch (error) {
-      console.error('Fehler beim Laden der Rezepte:', error);
-      return [];
+    if (searchTerm && searchTerm.trim() !== '') {
+      constraints.push(where('searchKeys', 'array-contains', searchTerm));
     }
+
+    if (like) {
+      constraints.push(where('like', '==', true));
+    }
+
+    const q = query(this._recipesColRef, ...constraints);
+    const snapshot = await getDocs(q);
+    // map data
+    let data: I_Recipe[] = convertSnaps(snapshot);
+
+    // save client-side filter
+    if (category && category !== 'all') {
+      data = data.filter((recipe) => recipe.categories && recipe.categories.includes(category));
+    }
+    // update signal
+    this._recipes.set(data);
+    return data;
   }
 
   public async getById(id: string): Promise<I_Recipe | null> {
@@ -107,24 +80,19 @@ export class RecipeStore {
       return null;
     }
 
-    return {
-      id: snapshot.id,
-      ...(snapshot.data() as I_Recipe),
-    };
+    const data = convertSnap<I_Recipe>(snapshot);
+    return data;
   }
 
   public async getByIngridient(name: string): Promise<I_Recipe[]> {
     const q = query(this._recipesColRef, where('ingredient', '==', name));
     const snapshot = await getDocs(q);
 
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...(doc.data() as I_Recipe),
-    }));
+    return convertSnaps(snapshot);
   }
 
   public async addRecipe(recipe: I_Recipe): Promise<DocumentReference<DocumentData, DocumentData>> {
-    this._setRecipes(recipe);
+    // this._setRecipes(recipe);
     const docRef = await addDoc(this._recipesColRef, recipe);
     const recipeWithId: I_Recipe = {
       ...recipe,
@@ -168,7 +136,6 @@ export class RecipeStore {
           params,
           loader: async ({ params }) => {
             // Simulate API call
-            console.log('params', params);
             const recipes = await recipeStore.getByIngridient(params);
             return { result: recipes.length > 0 };
           },

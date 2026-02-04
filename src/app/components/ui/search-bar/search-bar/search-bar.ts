@@ -23,15 +23,12 @@ export class SearchBar {
   constructor() {
     const search$ = toObservable(this._searchService.searchQueryObject).pipe(
       map((obj) => obj?.searchQuery ?? ''),
-
       debounceTime(800),
-      tap(console.log),
       distinctUntilChanged(),
     );
 
     search$.subscribe((query) => {
       if (query.length >= 3 || query.length === 0) {
-        console.log('fire');
         this._recipeStore._getAllRecipes();
       }
     });

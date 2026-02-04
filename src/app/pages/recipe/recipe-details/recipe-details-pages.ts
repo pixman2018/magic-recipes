@@ -3,10 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 // Store Interface
 import { RecipeStore } from '../../../services/recipesStore/recipe-store';
 import { I_Recipe } from '../../../models/recipe.model';
-import { I_IngredientInRecipe } from '../../../models/ingredient.model';
+import {
+  I_IngredientInRecipe,
+  I_IngredientInShoppiungList,
+} from '../../../models/ingredient.model';
 // pipes
 import { UcfirstPipe } from '../../../shared/pipes/ucFirst/ucfirst.pipe';
 import { RoundPipe } from '../../../shared/pipes/round/round.pipe-pipe';
+import { I_ShoppingList } from '../../../models/shoppingList.model';
+import { ShoppingListStore } from '../../../services/shoppingListStore/shopping-list-store';
 
 @Component({
   selector: 'app-recipe-details',
@@ -18,6 +23,7 @@ export class RecipeDetails {
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
   private _recipeStore = inject(RecipeStore);
+  private _shoppingListStore = inject(ShoppingListStore);
 
   protected recipe = signal<I_Recipe | null>(null);
 
@@ -75,11 +81,40 @@ export class RecipeDetails {
    * @returns void
    *
    */
-  protected onAdInShoppingList(): void {
-    const shoppingListObj = {
-      recipeName: this.recipe()?.title,
-      ingredients: this.ingredients,
-    };
+  protected async onAdInShoppingList(): Promise<void> {
+    const ingredients: I_IngredientInShoppiungList[] = this.ingredients.map((ingredient) => {
+      return { ...ingredient, isAvailable: false };
+    });
+
+    if (this.recipe() && this.recipe()?.title) {
+      const shoppingListObj: I_ShoppingList = {
+        recipeName: this.recipe()!.title,
+        recipeNameLower: this.recipe()!.title.toLowerCase(),
+        ingredients: ingredients,
+        archiv: false,
+        number: 1,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      };
+      // validator Shoppinglist
+      const shoppinglist: I_ShoppingList[] = await this._shoppingListStore.getShoppingListByTitle(
+        shoppingListObj.recipeNameLower,
+      );
+      const existShoppinglist = shoppinglist?.at(0);
+      if (existShoppinglist) {
+        // the recipe is in the shoppinglist
+        console.log('recipe is in the shoppinglist and is not archiv.');
+        if (existShoppinglist?.archiv) {
+          existShoppinglist.archiv = false;
+          existShoppinglist.number = existShoppinglist.number + 1;
+          this._shoppingListStore.updateShoppingList(existShoppinglist);
+          console.log('recipe is aktiv.');
+        }
+      } else {
+        // addShoppinglist
+        const result = await this._shoppingListStore.addShoppingList(shoppingListObj);
+      }
+    }
   }
 
   /**

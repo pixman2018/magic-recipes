@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomePage } from './pages/home-page/home-page';
 import { IngredientListPage } from './pages/ingredients/ingridient-list-pages/ingredient-list-pages';
-import { ShoppingListPages } from './pages/shopping-list/shopping-list-pages/shopping-list-pages';
+import { ShoppingListPages } from './pages/shoppingList/shopping-list/shopping-list-pages/shopping-list-pages';
 import { MealPlanPages } from './pages/meal-plan/meal-plan-pages/meal-plan-pages';
 import { RecipeDetails } from './pages/recipe/recipe-details/recipe-details-pages';
 import { Example } from './example/example';

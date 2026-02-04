@@ -2,11 +2,10 @@ import {
   AfterContentInit,
   ChangeDetectionStrategy,
   Component,
+  computed,
   contentChildren,
-  effect,
   input,
   output,
-  signal,
   TemplateRef,
 } from '@angular/core';
 import { Step } from '../step/step';
@@ -71,15 +70,12 @@ export class Stepper implements AfterContentInit {
 
   public hasRequireField = input<boolean>(true);
   public backToIndex = output<number>();
-  protected currentStepIndex = signal(0);
+  protected currentStepIndex = computed(() => {
+    return this._stepComponentRef()[0].currentStep();
+  });
 
   protected legendValues: string[] = [];
 
-  constructor() {
-    effect(() => {
-      this.currentStepIndex.set(this._stepComponentRef()[0].currentStep()());
-    });
-  }
   ngAfterContentInit(): void {
     // fetches the content from the zemplateref of _legendTemplates
     this._legendTemplates().forEach((template: TemplateRef<any>, index: number) => {
@@ -98,7 +94,7 @@ export class Stepper implements AfterContentInit {
   }
 
   protected onBackToIndex(index: number) {
-    if (this.currentStepIndex() > index) {
+    if (this.currentStepIndex()() > index) {
       this.backToIndex.emit(index);
     }
   }

@@ -31,17 +31,29 @@ export class IngredientListPage {
   protected ingredients: Signal<I_Ingredient[]> = this._ingredientsStore.ingredients;
   protected recipes: Signal<I_Recipe[]> = this._recipesStore.recipes;
 
-  constructor() {
-    effect(() => {
+  private _getIngredients(): void {
+    try {
       this.ingredients = this._ingredientsStore.ingredients;
-    });
+    } catch (error) {
+      console.error('Error by fetch all recipes', error);
+    }
   }
 
   updateAll() {
     console.log('update');
-    this._ingredientsStore.updateAllIngredients();
+
+    try {
+      this._ingredientsStore.updateAllIngredients();
+    } catch (error) {
+      console.error('Error by update from all ingredients', error);
+    }
   }
   updateAllRecipies() {
     this._recipesStore.updateAllRecipes({ updatedAt: Date.now(), createdAt: Date.now() });
+    try {
+      this.ingredients = this._ingredientsStore.ingredients;
+    } catch (error) {
+      console.error('Error by update from all recipes', error);
+    }
   }
 }

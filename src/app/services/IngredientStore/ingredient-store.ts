@@ -19,6 +19,7 @@ import {
   I_IngredientInRecipe,
   I_IngredientItem,
 } from '../../models/ingredient.model';
+import { convertSnap, convertSnaps } from '../../shared/data access/db-until';
 
 @Injectable({
   providedIn: 'root',
@@ -40,16 +41,8 @@ export class IngredientStore {
   private async _getAll(): Promise<void> {
     const snapshot = await getDocs(this._ingredientsColRef);
 
-    const data = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...(doc.data() as I_Ingredient),
-    }));
-    // const querySnapshot = await getDocs(this._ingredientsColRef);
+    const data: I_Ingredient[] = convertSnaps(snapshot);
 
-    // const data = querySnapshot.docs.map((doc) => ({
-    //   id: doc.id,
-    //   ...(doc.data() as I_IngredientInRecipe), // Hier sagst du TS: Vertrau mir, das passt!
-    // })) as I_IngredientInRecipe[];
     this._ingredients.set(data);
   }
 
@@ -61,10 +54,7 @@ export class IngredientStore {
       return null;
     }
 
-    return {
-      id: snapshot.id,
-      ...(snapshot.data() as I_Ingredient),
-    };
+    return convertSnap(snapshot);
   }
 
   public async getByIngredient(ingredient: string): Promise<I_Ingredient[]> {
@@ -72,16 +62,10 @@ export class IngredientStore {
     const q = query(this._ingredientsColRef, where('ingredient', '==', ingredient.trim()));
     const snapshot = await getDocs(q);
 
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...(doc.data() as I_Ingredient),
-    }));
+    return convertSnaps(snapshot);
   }
 
   public async addIngredient(ingredient: I_IngredientItem): Promise<I_IngredientItem> {
-    // mit ID
-    // const userRef = doc(this.firestore, `users/${id}`);
-
     const recipesRef: DocumentReference = await addDoc(this._ingredientsColRef, ingredient);
     const ingredientObject = {
       ...ingredient,
@@ -154,15 +138,3 @@ export function ingridentExists(
     }),
   });
 }
-
-/*
-Rule
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
-    }
-  }
-}
-*/

@@ -119,14 +119,6 @@ export class RecipeForm {
     return totals;
   });
 
-  constructor() {
-    effect(() => {
-      // console.log('log generalRecipeForm', this.generalRecipeForm.categories().value());
-      // console.log('log recipeForm', this.ingridientForm().value());
-      // console.log('log stepForm', this.stepForm().value());
-    });
-  }
-
   protected onReset(): void {
     this._generalRecipeModel.set(this._getRecipeFormObj());
     this._ingridientModel.set({ ingredients: [] });
@@ -391,9 +383,13 @@ export class RecipeForm {
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
-      const result = await this._recipeStore.addRecipe(recipeObject);
-      if (result) {
-        this._router.navigate(['/recipes']);
+      try {
+        const result = await this._recipeStore.addRecipe(recipeObject);
+        if (result) {
+          this._router.navigate(['/recipes']);
+        }
+      } catch (error) {
+        console.error('Error by create a new recipe:', error);
       }
     }
   }

@@ -11,9 +11,9 @@
     <div class="step__header__line"></div>
     @for (legendValue of legendValues; track index; let index = $index) {
     <div class="step__header__icon ">
-      <div [class.bg-lime-700]="index + 1 <= currentStepIndex()" [class.bg-gray-400]="index + 1 > currentStepIndex()"
-        class="step__header__icon__index  text-white " [class.cursor-pointer]="this.currentStepIndex() > index"
-        (click)="onBackToIndex(index +1)">
+      <div [class.bg-lime-700]="index + 1 <= currentStepIndex()()"
+        [class.bg-gray-400]="index + 1 > currentStepIndex()()" class="step__header__icon__index  text-white "
+        [class.cursor-pointer]="this.currentStepIndex()() > index" (click)="onBackToIndex(index +1)">
         {{index
         +
         1}}

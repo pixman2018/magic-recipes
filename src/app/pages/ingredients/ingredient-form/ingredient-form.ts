@@ -34,12 +34,16 @@ export class IngredientForm {
   });
 
   constructor() {
-    effect(() => {
-      this._ingredientModel.update((currentIngridient) => ({
-        ...currentIngridient,
-        ingredient: this.ingridient(),
-      }));
-    });
+    effect(
+      () => {
+        const ingridient = this.ingridient();
+        this._ingredientModel.update((currentIngredient) => ({
+          ...currentIngredient,
+          ingredient: ingridient,
+        }));
+      },
+      { allowSignalWrites: true },
+    );
   }
 
   protected indredientForm = form(this._ingredientModel, (schemaPath) => {
@@ -59,21 +63,26 @@ export class IngredientForm {
   });
 
   protected async onSubmit() {
-    if (this.indredientForm().valid()) {
-      this._ingredientModel.update((currentIngridient) => ({
-        ...currentIngridient,
-        ingredient: currentIngridient.ingredient.toLocaleLowerCase(),
-      }));
+    const formState = this.indredientForm();
+
+    if (formState.valid()) {
+      const rawValue = formState.value();
+
       const ingredient: I_IngredientItem = {
-        ...this.indredientForm().value(),
+        ...rawValue,
+        ingredient: rawValue.ingredient.trim().toLowerCase(),
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
 
-      const result = await this._ingridientService.addIngredient(ingredient);
-      result.indexIngredient = this.indexIngredient();
-      this.indredientFormResult.emit(result);
-      this.indredientForm().reset();
+      try {
+        const result = await this._ingridientService.addIngredient(ingredient);
+        result.indexIngredient = this.indexIngredient();
+        this.indredientFormResult.emit(result);
+        this.indredientForm().reset();
+      } catch (error) {
+        console.error('Error by add a new ingredient', error);
+      }
     }
     this.indredientFormResult.emit(null);
   }

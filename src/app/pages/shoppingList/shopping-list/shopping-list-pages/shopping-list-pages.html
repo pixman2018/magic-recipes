@@ -1,0 +1,19 @@
+<section class="container-flex">
+    <div class="container-inner  mt-3 gap-5 ">
+        @for (shoppingItem of shoppingList(); track shoppingItem) {
+        <h3>{{ shoppingItem.recipeName }}</h3>
+        <app-shopping-list-item [ingredients]="shoppingItem.ingredients" [shoppingItem]="shoppingItem" />
+        <div class="mb-4">
+            <button type="button" class="btn btn-ghost-primary w-[100px] flex justify-center ml-auto"
+                (click)="onCompletedList(shoppingItem)">
+                Archivieren
+            </button>
+        </div>
+        }
+        @empty {
+        <p>Keine Einkaufliste vorhanden</p>
+        }
+    </div>
+
+
+</section>

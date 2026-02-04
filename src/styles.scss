@@ -142,6 +142,10 @@
     @apply w-[100%]  p-1 bg-transparent  text-lime-700 border-solid border-b-lime-700/50 border-l-lime-700/50 border-l-2 border-b-2 rounded-md placeholder-lime-700 placeholder:text-base focus:outline-lime-700/20 focus:text-black focus:border-b-white;
   }
 
+  .checkbox {
+    @apply ml-1 outline-lime-700 outline-1 accent-lime-700 checked:text-white;
+  }
+
   #mainnav {
     @apply flex flex-col;
   }
