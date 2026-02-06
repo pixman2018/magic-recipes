@@ -1,6 +1,6 @@
 <div class="shopping-list-item-container">
     <ul class="leading-6">
-        @for (ingredient of ingredients() | orderBy: 'isAvailable'; track ingredient) {
+        @for (ingredient of ingredients() | orderBy: 'isAvailable': true; track ingredient) {
         <li class="flex li-even">
             <label>
                 <input type="checkbox" class="checkbox" [checked]="ingredient.isAvailable"
