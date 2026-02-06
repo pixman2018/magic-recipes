@@ -1,0 +1,16 @@
+@if(messageData()) {
+
+<div class="message__container" [class.message-warn]="messageData()?.type === 'warn'"
+    [class.message-success]="messageData()?.type === 'success'"
+    [class.message-danger]="messageData()?.type === 'danger'">
+    @if(!messageData()?.autoclose) {
+    <div class="message__action">
+        <button (click)="onCloseMessage()" class="cursor-pointer">X</button>
+    </div>
+    }
+    <div class="message__content">
+        <h3>{{ messageData()?.title }}</h3>
+        <p>{{ messageData()?.message }}</p>
+    </div>
+</div>
+}

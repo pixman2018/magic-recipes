@@ -1,7 +1,9 @@
 <app-header></app-header>
 
-<!-- <app-parent /> -->
-<lib-message />
+
+@if(message()) {
+<lib-message-dialog [messageData]="message()" />
+}
 
 <lib-confirm-dialog />
 
