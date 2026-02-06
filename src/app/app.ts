@@ -8,7 +8,7 @@ import { MessageDialog } from './components/message/message-dialog/message-dialo
 
 // services and model
 import { MessageService } from './components/message/messageService/message-service';
-import { I_MessageState } from './models/message_confirem.model';
+import { I_MessageState } from './components/message/message_confirem.model';
 
 @Component({
   selector: 'app-root',

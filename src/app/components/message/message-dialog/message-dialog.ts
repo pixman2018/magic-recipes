@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { I_MessageState } from '../../../models/message_confirem.model';
+import { I_MessageState } from '../message_confirem.model';
 import { JsonPipe } from '@angular/common';
 import { MessageService } from '../messageService/message-service';
 
