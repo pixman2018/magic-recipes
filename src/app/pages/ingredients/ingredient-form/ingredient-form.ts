@@ -13,9 +13,10 @@ import { I_Ingredient, I_IngredientItem } from '../../../models/ingredient.model
 })
 export class IngredientForm {
   private _ingridientService = inject(IngredientStore);
+
   public ingridient = input.required<string>();
-  public indredientFormResult = output<I_Ingredient | null>();
   public indexIngredient = input.required<number>();
+  public indredientFormResult = output<I_Ingredient | null>();
   private _ingredientModel = signal<I_Ingredient>({
     ingredient: '',
     calories: 0,
@@ -69,9 +70,11 @@ export class IngredientForm {
       };
 
       const result = await this._ingridientService.create(ingredient);
-      result.indexIngredient = this.indexIngredient();
-      this.indredientFormResult.emit(result);
-      this.indredientForm().reset();
+      if (result) {
+        result.indexIngredient = this.indexIngredient();
+        this.indredientFormResult.emit(result);
+        this.indredientForm().reset();
+      }
     }
     this.indredientFormResult.emit(null);
   }

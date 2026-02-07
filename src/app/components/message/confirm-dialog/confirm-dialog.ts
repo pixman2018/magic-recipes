@@ -19,22 +19,38 @@ import { MessageService } from '../messageService/message-service';
   imports: [],
   template: `
     @if (confirmService.confirmDialog(); as data) {
-    <div class="overlay">
-      <div class="dialog">
-        <h2>{{ data.title }}</h2>
-        <p>{{ data.message }}</p>
-        <div class="actions">
-          <button (click)="confirmService.handleAnswer(false)">Abbrechen</button>
-          <button (click)="confirmService.handleAnswer(true)" class="danger">Bestätigen</button>
+      <div class="overlay">
+        <div class="dialog">
+          <h2>{{ data.title }}</h2>
+          <p>{{ data.message }}</p>
+          <div class="actions">
+            <button (click)="confirmService.handleAnswer(false)">Abbrechen</button>
+            <button (click)="confirmService.handleAnswer(true)" class="danger">Bestätigen</button>
+          </div>
         </div>
       </div>
-    </div>
     }
   `,
   styles: `
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: grid; place-items: center; z-index: 1000; }
-    .dialog { background: white; padding: 2rem; border-radius: 8px; max-width: 400px; }
-    .danger { background: red; color: white; }
+    @import '../messages.scss';
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: grid;
+      place-items: center;
+      z-index: 1000;
+    }
+    .dialog {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 400px;
+    }
+    .danger {
+      background: red;
+      color: white;
+    }
   `,
 })
 export class ConfirmDialog {

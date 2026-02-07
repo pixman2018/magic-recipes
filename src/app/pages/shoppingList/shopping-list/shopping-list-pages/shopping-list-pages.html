@@ -4,9 +4,9 @@
         <h3>{{ shoppingItem.recipeName }}</h3>
         <app-shopping-list-item [ingredients]="shoppingItem.ingredients" [shoppingItem]="shoppingItem" />
         <div class="mb-4">
-            <button type="button" class="btn btn-ghost-primary w-[100px] flex justify-center ml-auto"
+            <button type="button" class="btn btn-ghost-primary w-[100px] mt-4 flex justify-center ml-auto"
                 (click)="onCompletedList(shoppingItem)">
-                Archivieren
+                Erledigt
             </button>
         </div>
         }

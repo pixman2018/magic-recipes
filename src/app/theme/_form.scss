@@ -21,6 +21,7 @@ form {
 .form-control,
 .step__action {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   gap: 0.25rem;
 }
@@ -31,8 +32,6 @@ label {
 
 label:not(.inline) {
   display: flex;
-  // flex-direction: column;
-  // gap: 0.25rem;
 }
 
 .disabled {

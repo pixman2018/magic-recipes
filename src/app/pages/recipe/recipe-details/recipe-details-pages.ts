@@ -12,10 +12,13 @@ import { UcfirstPipe } from '../../../shared/pipes/ucFirst/ucfirst.pipe';
 import { RoundPipe } from '../../../shared/pipes/round/round.pipe-pipe';
 import { I_ShoppingList } from '../../../models/shoppingList.model';
 import { ShoppingListStore } from '../../../services/shoppingListStore/shopping-list-store';
+import { JsonPipe } from '@angular/common';
+import { MessageService } from '../../../components/message/messageService/message-service';
+import { AppService } from '../../../services/appService/app-service';
 
 @Component({
   selector: 'app-recipe-details',
-  imports: [UcfirstPipe, RoundPipe],
+  imports: [UcfirstPipe, RoundPipe, JsonPipe],
   templateUrl: './recipe-details-pages.html',
   styleUrl: './recipe-details-pages.scss',
 })
@@ -24,6 +27,8 @@ export class RecipeDetails {
   private _router = inject(Router);
   private _recipeStore = inject(RecipeStore);
   private _shoppingListStore = inject(ShoppingListStore);
+  private _messageService = inject(MessageService);
+  private _appService = inject(AppService);
 
   protected recipe = signal<I_Recipe | null>(null);
 
@@ -87,6 +92,7 @@ export class RecipeDetails {
     });
 
     if (this.recipe() && this.recipe()?.title) {
+      let message: string = '';
       const shoppingListObj: I_ShoppingList = {
         recipeName: this.recipe()!.title,
         recipeNameLower: this.recipe()!.title.toLowerCase(),
@@ -103,17 +109,22 @@ export class RecipeDetails {
       const existShoppinglist = shoppinglist?.at(0);
       if (existShoppinglist) {
         // the recipe is in the shoppinglist
+        message = 'Das Rezept ist schon in der Einkaufsliste.';
         console.log('recipe is in the shoppinglist and is not archiv.');
         if (existShoppinglist?.archiv) {
           existShoppinglist.archiv = false;
           existShoppinglist.number = existShoppinglist.number + 1;
           this._shoppingListStore.edit(existShoppinglist);
           console.log('recipe is aktiv.');
+          message = 'Das Rezept ist in der Einkaufsliste';
         }
       } else {
         // addShoppinglist
         const result = await this._shoppingListStore.create(shoppingListObj);
+        message = 'Das Rezept ist in der Einkaufsliste';
       }
+      this._messageService.setMessage({ message });
+      this._appService.scrollToTop();
     }
   }
 

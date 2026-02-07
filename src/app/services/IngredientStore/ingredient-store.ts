@@ -20,6 +20,7 @@ import { I_Ingredient, I_IngredientItem } from '../../models/ingredient.model';
 import { HttpBasesAbstractClass } from '../../shared/data access/http-basis-abstract-class';
 import { SearchService } from '../../components/ui/search-bar/searchService/search.service';
 import { FilterService } from '../../components/ui/filter/filterService/filter';
+import { MessageService } from '../../components/message/messageService/message-service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,7 @@ import { FilterService } from '../../components/ui/filter/filterService/filter';
 export class IngredientStore extends HttpBasesAbstractClass {
   private _searchService = inject(SearchService);
   private _filterService = inject(FilterService);
+  private _messageService = inject(MessageService);
 
   private _ingredientsColRef;
   private _ingredients = signal<I_Ingredient[]>([]);
@@ -92,9 +94,13 @@ export class IngredientStore extends HttpBasesAbstractClass {
         refLink: recipesRef.path,
       };
       this._setIngredient(ingredientObject);
+      this._messageService.setMessage({
+        message: `Neue Zutat mit der ID ${recipesRef.id} gespeichert`,
+      });
       return ingredientObject;
     } catch (error) {
       console.error(`Error by add ingredient`);
+      this._messageService.setMessage({ message: `Zutat könnte nicht gespeichert werden.` });
       throw error;
     }
   }

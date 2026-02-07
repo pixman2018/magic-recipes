@@ -88,15 +88,9 @@ export class RecipeForm {
   protected isLastStepValid = signal<boolean>(false);
   protected ingredientFormValid = signal<boolean>(false);
   protected showIngredientForm = signal<boolean>(false);
-  // private _totalNutritionalValues = signal<I_NutritionalValues>({
-  //   calories: 0,
-  //   protein: 0,
-  //   carbohydrates: 0,
-  //   dietaryFiber: 0,
-  //   fat: 0,
-  // });
+
   protected totalNutritionalValues = computed(() => {
-    const ingredients = this._ingridientModel().ingredients;
+    const ingredients = this._ingredientModel().ingredients;
     // set default value
     const totals: I_NutritionalValues = {
       calories: 0,
@@ -119,9 +113,19 @@ export class RecipeForm {
     return totals;
   });
 
+  protected difficultyLabel = computed(() => {
+    const value = Number(this.generalRecipeForm.levelOfDifficulty().value());
+    const labels: Record<number, string> = {
+      1: 'Einfach',
+      2: 'Mittel',
+      3: 'Schwer',
+    };
+    return labels[value] || 'Unbekannt';
+  });
+
   protected onReset(): void {
     this._generalRecipeModel.set(this._getRecipeFormObj());
-    this._ingridientModel.set({ ingredients: [] });
+    this._ingredientModel.set({ ingredients: [] });
     this._stepModel.set({ steps: [] });
   }
 
@@ -146,7 +150,7 @@ export class RecipeForm {
       title: '',
       text: '',
       image: '',
-      levelOfDifficulty: 0,
+      levelOfDifficulty: 1,
       cookingTime: 0,
       preparationTime: 0,
       categories: [],
@@ -173,11 +177,11 @@ export class RecipeForm {
     minLength(schemaPath.categories, 1, { message: 'Bitte geben mindestens eine Kategorie an.' });
   });
 
-  private _ingridientModel = signal<I_IngridientListData>({
+  private _ingredientModel = signal<I_IngridientListData>({
     ingredients: [],
   });
 
-  protected ingridientForm = form(this._ingridientModel, (schemaPath) => {
+  protected ingridientForm = form(this._ingredientModel, (schemaPath) => {
     applyEach(schemaPath.ingredients, (recipePath) => {
       required(recipePath.ingredient, { message: 'Bitte gebe die Zutat an.' });
       minLength(recipePath.ingredient, 3, {
@@ -195,7 +199,7 @@ export class RecipeForm {
       }
 
       this.ingredientFormValid.set(false);
-      this._ingridientModel.update((currentIngredient) => ({
+      this._ingredientModel.update((currentIngredient) => ({
         ...currentIngredient,
         ingredients: [ingredient ?? this._setIngredientObj(), ...currentIngredient.ingredients],
       }));
@@ -203,12 +207,9 @@ export class RecipeForm {
   }
 
   protected onDeleteIngredient(index: number) {
-    this._ingridientModel.update((oldIngridients) => ({
-      ...oldIngridients,
-      ingridients: [
-        ...oldIngridients.ingredients.slice(0, index),
-        ...oldIngridients.ingredients.slice(index + 1),
-      ],
+    this._ingredientModel.update((oldIngredients) => ({
+      ...oldIngredients,
+      ingredients: oldIngredients.ingredients.filter((_, i) => i !== index),
     }));
   }
 
@@ -245,7 +246,7 @@ export class RecipeForm {
 
         // Calculate calories
         // We retrieve the current status of the specific ingredient
-        const currentIngData = this._ingridientModel().ingredients[index];
+        const currentIngData = this._ingredientModel().ingredients[index];
 
         if (currentIngData.unit > 0) {
           const nutritionalValues: I_NutritionalValues | void =
@@ -274,8 +275,8 @@ export class RecipeForm {
 
       const nutritionalValues: I_NutritionalValues | void =
         await this._calcCaloriesService.convertCaloriens(
-          this._ingridientModel().ingredients[ingredient.indexIngredient],
-          this._ingridientModel().ingredients[ingredient.indexIngredient].ingredientId,
+          this._ingredientModel().ingredients[ingredient.indexIngredient],
+          this._ingredientModel().ingredients[ingredient.indexIngredient].ingredientId,
         );
 
       if (nutritionalValues) {
@@ -290,7 +291,7 @@ export class RecipeForm {
 
   private _updateIdInIngredient(id: string, indexIngredient: number): void {
     if (indexIngredient !== undefined && indexIngredient !== null) {
-      this._ingridientModel.update((currentIngredient) => ({
+      this._ingredientModel.update((currentIngredient) => ({
         ...currentIngredient,
         ingredients: currentIngredient.ingredients.map((ingredient, index) =>
           index === indexIngredient ? { ...ingredient, ingredientId: id } : ingredient,
@@ -301,7 +302,7 @@ export class RecipeForm {
 
   private setAllNutritionalValues(nutritionalValues: I_NutritionalValues, index: number): void {
     if (nutritionalValues) {
-      this._ingridientModel.update((currentIngredient) => ({
+      this._ingredientModel.update((currentIngredient) => ({
         ...currentIngredient,
         ingredients: currentIngredient.ingredients.map((ingredient, i) =>
           i === index ? { ...ingredient, nutritionalValues: nutritionalValues } : ingredient,
@@ -322,21 +323,21 @@ export class RecipeForm {
   });
 
   protected onAddStep(step?: I_StepData) {
-    console.log(this.stepForm.steps().valid() || this.stepForm.steps().value().length === 0);
     if (this.stepForm.steps().valid() || this.stepForm.steps().value().length === 0) {
       this._stepModel.update((currentSteps) => ({
         ...currentSteps,
         steps: [step ?? { step: '' }, ...currentSteps.steps],
       }));
-      console.log(this._stepModel());
     }
   }
 
   protected onDeleteStep(index: number) {
-    this._stepModel.update((currentSteps) => ({
-      ...currentSteps,
-      steps: [...currentSteps.steps.slice(0, index), ...currentSteps.steps.slice(index + 1)],
+    this._stepModel.update((oldSteps) => ({
+      ...oldSteps,
+      steps: oldSteps.steps.filter((_, i) => i !== index),
     }));
+
+    console.log(this._stepModel().steps);
   }
 
   protected onCheckStepValue() {

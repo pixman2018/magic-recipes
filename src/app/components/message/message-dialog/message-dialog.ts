@@ -2,7 +2,7 @@ import { Component, inject, Signal } from '@angular/core';
 
 // service model
 import { MessageService } from '../messageService/message-service';
-import { I_MessageState } from '../../../models/message_confirem.model';
+import { I_MessageState } from '../message_confirem.model';
 
 @Component({
   selector: 'lib-message-dialog',

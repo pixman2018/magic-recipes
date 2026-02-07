@@ -5,7 +5,7 @@ export interface I_ConfirmState {
 }
 
 export interface I_MessageState {
-  title: string;
+  title?: string;
   message: string;
   type?: 'danger' | 'success' | 'warn';
   autoclose?: boolean;

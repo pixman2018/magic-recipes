@@ -9,7 +9,10 @@
     </div>
     }
     <div class="message__content">
+        @if(messageData()?.title ) {
         <h3>{{ messageData()?.title }}</h3>
+        }
+
         <p>{{ messageData()?.message }}</p>
     </div>
 </div>

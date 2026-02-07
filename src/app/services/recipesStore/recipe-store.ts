@@ -24,6 +24,7 @@ import { SearchService } from '../../components/ui/search-bar/searchService/sear
 import { FilterService } from '../../components/ui/filter/filterService/filter';
 import { I_Recipe } from '../../models/recipe.model';
 import { HttpBasesAbstractClass } from '../../shared/data access/http-basis-abstract-class';
+import { MessageService } from '../../components/message/messageService/message-service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,8 @@ import { HttpBasesAbstractClass } from '../../shared/data access/http-basis-abst
 export class RecipeStore extends HttpBasesAbstractClass {
   private _searchService = inject(SearchService);
   private _filterService = inject(FilterService);
+  private _messageService = inject(MessageService);
+
   private _recipes = signal<I_Recipe[]>([]);
 
   private _recipesColRef;
@@ -127,9 +130,15 @@ export class RecipeStore extends HttpBasesAbstractClass {
         id: docRef.id,
       };
       this._setRecipes(recipeWithId);
+      this._messageService.setMessage({
+        message: `Ein neues Rezept wurde in der Datenbank mit der ID ${docRef.id} gespeichert.`,
+      });
       return docRef;
     } catch (error) {
       console.error('Error by create a new recipe:', error);
+      this._messageService.setMessage({
+        message: `Es konnte kein neues Rezept angelegt werden..`,
+      });
       throw error;
     }
   }

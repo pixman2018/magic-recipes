@@ -7,6 +7,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  orderBy,
   query,
   updateDoc,
   where,
@@ -42,6 +43,20 @@ export class ShoppingListStore extends HttpBasesAbstractClass {
       return data;
     } catch (error) {
       console.error('Error by load from all shoppinglist');
+      return [];
+    }
+  }
+
+  public async getAllArchive(flag: boolean = false): Promise<I_ShoppingList[] | []> {
+    try {
+      const q = query(this._shoppingListColRef, where('archiv', '==', flag), orderBy('recipeName'));
+      const snapshot = await getDocs(q);
+      const data: I_ShoppingList[] = convertSnaps(snapshot);
+      console.log(data);
+      this._shoppingList.set(data);
+      return data;
+    } catch (error) {
+      console.error('Error by load from all not archiv shoppinglist');
       return [];
     }
   }

@@ -1,5 +1,5 @@
 import { Injectable, Signal, signal } from '@angular/core';
-import { I_ConfirmState, I_MessageState } from '../../../models/message_confirem.model';
+import { I_ConfirmState, I_MessageState } from '../message_confirem.model';
 
 @Injectable({
   providedIn: 'root',
@@ -36,9 +36,9 @@ export class MessageService {
    *****
    */
   public setMessage({
-    title,
     message,
     type = 'success',
+    title,
     autoclose = false,
     openTime = 5000,
   }: I_MessageState): void {
