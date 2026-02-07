@@ -29,7 +29,7 @@ export class SearchBar {
 
     search$.subscribe((query) => {
       if (query.length >= 3 || query.length === 0) {
-        this._recipeStore._getAllRecipes();
+        this._recipeStore.getAll();
       }
     });
   }

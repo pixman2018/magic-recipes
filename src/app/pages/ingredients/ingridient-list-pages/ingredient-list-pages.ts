@@ -31,6 +31,10 @@ export class IngredientListPage {
   protected ingredients: Signal<I_Ingredient[]> = this._ingredientsStore.ingredients;
   protected recipes: Signal<I_Recipe[]> = this._recipesStore.recipes;
 
+  constructor() {
+    this._ingredientsStore.getAll();
+  }
+
   private _getIngredients(): void {
     try {
       this.ingredients = this._ingredientsStore.ingredients;
@@ -43,7 +47,7 @@ export class IngredientListPage {
     console.log('update');
 
     try {
-      this._ingredientsStore.updateAllIngredients();
+      this._ingredientsStore.updateAllIngredients({ updatedAt: Date.now(), createdAt: Date.now() });
     } catch (error) {
       console.error('Error by update from all ingredients', error);
     }

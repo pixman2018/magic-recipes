@@ -1,16 +1,9 @@
-import { Component, effect, inject, input, OnInit, output, signal } from '@angular/core';
-import {
-  FormField,
-  form,
-  required,
-  min,
-  minLength,
-  disabled,
-  readonly,
-} from '@angular/forms/signals';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
+import { FormField, form, required, min, minLength, readonly } from '@angular/forms/signals';
 import { ErrorMessage } from '../../../components/lib/error-message/error-message';
-import { I_Ingredient, I_IngredientItem } from '../../../models/ingredient.model';
+// service, model
 import { IngredientStore } from '../../../services/IngredientStore/ingredient-store';
+import { I_Ingredient, I_IngredientItem } from '../../../models/ingredient.model';
 
 @Component({
   selector: 'app-ingredient-form',
@@ -75,14 +68,10 @@ export class IngredientForm {
         updatedAt: Date.now(),
       };
 
-      try {
-        const result = await this._ingridientService.addIngredient(ingredient);
-        result.indexIngredient = this.indexIngredient();
-        this.indredientFormResult.emit(result);
-        this.indredientForm().reset();
-      } catch (error) {
-        console.error('Error by add a new ingredient', error);
-      }
+      const result = await this._ingridientService.create(ingredient);
+      result.indexIngredient = this.indexIngredient();
+      this.indredientFormResult.emit(result);
+      this.indredientForm().reset();
     }
     this.indredientFormResult.emit(null);
   }

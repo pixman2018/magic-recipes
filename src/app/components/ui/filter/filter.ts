@@ -24,6 +24,6 @@ export class FilterComponent {
       filter: filter,
       pageName: this.navigationOptions().pagename ?? '',
     });
-    this._recipeStore._getAllRecipes();
+    this._recipeStore.getAll();
   }
 }

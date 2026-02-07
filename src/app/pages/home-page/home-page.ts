@@ -13,13 +13,9 @@ import { RecipesList } from '../recipe/recipes-list/recipes-list';
 })
 export class HomePage {
   private _recipeStore = inject(RecipeStore);
-  protected recipes = this._recipeStore.recipes;
+  protected recipes: Signal<I_Recipe[]> = this._recipeStore.recipes;
 
   constructor() {
-    try {
-      this._recipeStore._getAllRecipes();
-    } catch (error) {
-      console.error('Fehler beim Laden der Rezepte:', error);
-    }
+    this._recipeStore.getAll();
   }
 }

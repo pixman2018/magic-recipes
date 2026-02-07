@@ -383,13 +383,10 @@ export class RecipeForm {
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
-      try {
-        const result = await this._recipeStore.addRecipe(recipeObject);
-        if (result) {
-          this._router.navigate(['/recipes']);
-        }
-      } catch (error) {
-        console.error('Error by create a new recipe:', error);
+
+      const result = await this._recipeStore.create(recipeObject);
+      if (result) {
+        this._router.navigate(['/recipes']);
       }
     }
   }

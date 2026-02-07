@@ -1,12 +1,12 @@
 import { inject, Injectable, resource, signal } from '@angular/core';
 import { SchemaPath, validateAsync } from '@angular/forms/signals';
+// firebase
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
-  DocumentData,
   DocumentReference,
-  Firestore,
   getDoc,
   getDocs,
   query,
@@ -14,88 +14,138 @@ import {
   where,
   writeBatch,
 } from '@angular/fire/firestore';
-import {
-  I_Ingredient,
-  I_IngredientInRecipe,
-  I_IngredientItem,
-} from '../../models/ingredient.model';
 import { convertSnap, convertSnaps } from '../../shared/data access/db-until';
+// service model
+import { I_Ingredient, I_IngredientItem } from '../../models/ingredient.model';
+import { HttpBasesAbstractClass } from '../../shared/data access/http-basis-abstract-class';
+import { SearchService } from '../../components/ui/search-bar/searchService/search.service';
+import { FilterService } from '../../components/ui/filter/filterService/filter';
 
 @Injectable({
   providedIn: 'root',
 })
-export class IngredientStore {
-  private _firestore = inject(Firestore);
-  private _table = 'ingredients';
-  private _ingredientsColRef = collection(this._firestore, this._table);
+export class IngredientStore extends HttpBasesAbstractClass {
+  private _searchService = inject(SearchService);
+  private _filterService = inject(FilterService);
+
+  private _ingredientsColRef;
   private _ingredients = signal<I_Ingredient[]>([]);
 
   constructor() {
-    this._getAll();
+    super();
+    this.dbPath = 'ingredients';
+    this._ingredientsColRef = collection(this.firestore, this.dbPath);
   }
 
   public get ingredients() {
     return this._ingredients.asReadonly();
   }
 
-  private async _getAll(): Promise<void> {
-    const snapshot = await getDocs(this._ingredientsColRef);
+  public override async getAll(): Promise<I_Ingredient[]> {
+    try {
+      const snapshot = await getDocs(this._ingredientsColRef);
 
-    const data: I_Ingredient[] = convertSnaps(snapshot);
+      const data: I_Ingredient[] = convertSnaps(snapshot);
 
-    this._ingredients.set(data);
+      this._ingredients.set(data);
+      return data;
+    } catch (error) {
+      console.error('Error by get all ingredients');
+      throw error;
+    }
   }
 
-  public async getById(id: string): Promise<I_Ingredient | null> {
-    const ingredientRef = doc(this._firestore, `${this._table}/${id}`);
-    const snapshot = await getDoc(ingredientRef);
+  public override async getById(id: string): Promise<I_Ingredient | null> {
+    try {
+      const ingredientRef = doc(this.firestore, `${this.dbPath}/${id}`);
+      const snapshot = await getDoc(ingredientRef);
 
-    if (!snapshot.exists()) {
+      if (!snapshot.exists()) {
+        return null;
+      }
+
+      return convertSnap(snapshot);
+    } catch (error) {
+      console.error(`Error by get ingredients by ID: "${id}"`);
       return null;
     }
-
-    return convertSnap(snapshot);
   }
 
-  public async getByIngredient(ingredient: string): Promise<I_Ingredient[]> {
-    console.log('params', ingredient);
-    const q = query(this._ingredientsColRef, where('ingredient', '==', ingredient.trim()));
-    const snapshot = await getDocs(q);
+  public async getByIngredient(ingredient: string): Promise<I_Ingredient[] | []> {
+    try {
+      const q = query(this._ingredientsColRef, where('ingredient', '==', ingredient.trim()));
+      const snapshot = await getDocs(q);
 
-    return convertSnaps(snapshot);
+      return convertSnaps(snapshot);
+    } catch (error) {
+      console.error(`Error by get ingredients by name: "${ingredient}"`);
+      return [];
+    }
   }
 
-  public async addIngredient(ingredient: I_IngredientItem): Promise<I_IngredientItem> {
-    const recipesRef: DocumentReference = await addDoc(this._ingredientsColRef, ingredient);
-    const ingredientObject = {
-      ...ingredient,
-      id: recipesRef.id,
-      refLink: recipesRef.path,
-    };
-    this._setIngredient(ingredientObject);
-    return ingredientObject;
+  public override async create(ingredient: I_IngredientItem): Promise<I_IngredientItem> {
+    try {
+      const recipesRef: DocumentReference = await addDoc(this._ingredientsColRef, ingredient);
+      const ingredientObject = {
+        ...ingredient,
+        id: recipesRef.id,
+        refLink: recipesRef.path,
+      };
+      this._setIngredient(ingredientObject);
+      return ingredientObject;
+    } catch (error) {
+      console.error(`Error by add ingredient`);
+      throw error;
+    }
   }
 
-  public updateIngredient(ingredient: I_Ingredient, id: string) {
-    this._setIngredient(ingredient);
-    const ingredientRef = doc(this._firestore, `${this._table}/${id}`);
-    return updateDoc(ingredientRef, { ...ingredient });
+  public override edit(ingredient: I_IngredientItem, id: string): Promise<void> {
+    try {
+      ingredient.updatedAt = Date.now();
+      this._setIngredient(ingredient);
+      const ingredientRef = doc(this.firestore, `${this.dbPath}/${id}`);
+      return updateDoc(ingredientRef, { ...ingredient });
+    } catch (error) {
+      console.error(`Error by add ingredient`);
+      throw error;
+    }
   }
 
-  public async updateAllIngredients() {
+  public override async delete(id: string): Promise<void> {
+    try {
+      const ingredientRef = doc(this.firestore, `${this.dbPath}/${id}`);
+      await deleteDoc(ingredientRef);
+    } catch (error) {
+      console.error('Error by del ingredient:', error);
+      throw error;
+    }
+  }
+
+  public async updateAllIngredients(newIngredient: {}) {
     const snapshot = await getDocs(this._ingredientsColRef);
     // init batch
-    const batch = writeBatch(this._firestore);
+    const batch = writeBatch(this.firestore);
+    try {
+      snapshot.forEach(async (document) => {
+        const docRef = doc(this.firestore, `${this.dbPath}/${document.id}`);
+        const snapshot = await getDoc(docRef);
+        const data: I_IngredientItem | null = convertSnap(snapshot);
+        if (data) {
+          data.updatedAt = Date.now();
+        }
+        // document add batch
+        batch.update(docRef, {
+          ...newIngredient,
+        });
+      });
 
-    snapshot.forEach((document) => {
-      const docRef = doc(this._firestore, `${this._table}/${document.id}`);
-      // document add batch
-      batch.update(docRef, { isSpices: false, updatedAt: Date.now(), createdAt: Date.now() });
-    });
-
-    // Submit all changes at once
-    await batch.commit();
-    console.log('Alle Zutaten wurden aktualisiert!');
+      // Submit all changes at once
+      await batch.commit();
+      console.log('Alle Zutaten wurden aktualisiert!');
+    } catch (error) {
+      console.log('Error by upadate all ingredient');
+      throw error;
+    }
   }
 
   private _setIngredient(ingredient: I_Ingredient) {

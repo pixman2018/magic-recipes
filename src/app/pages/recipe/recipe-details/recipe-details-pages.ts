@@ -107,12 +107,12 @@ export class RecipeDetails {
         if (existShoppinglist?.archiv) {
           existShoppinglist.archiv = false;
           existShoppinglist.number = existShoppinglist.number + 1;
-          this._shoppingListStore.updateShoppingList(existShoppinglist);
+          this._shoppingListStore.edit(existShoppinglist);
           console.log('recipe is aktiv.');
         }
       } else {
         // addShoppinglist
-        const result = await this._shoppingListStore.addShoppingList(shoppingListObj);
+        const result = await this._shoppingListStore.create(shoppingListObj);
       }
     }
   }
@@ -151,16 +151,13 @@ export class RecipeDetails {
       console.error('No recipe ID found');
       return;
     }
-    try {
-      const recipe = await this._recipeStore.getById(id);
-      this.recipe.set(recipe);
 
-      if (recipe?.ingredients) {
-        this.ingredientsOriginal = structuredClone(recipe?.ingredients);
-        this.ingredients = structuredClone(recipe?.ingredients);
-      }
-    } catch (error) {
-      console.error('can not loaded a ingredient by Id');
+    const recipe = await this._recipeStore.getById(id);
+    this.recipe.set(recipe);
+
+    if (recipe?.ingredients) {
+      this.ingredientsOriginal = structuredClone(recipe?.ingredients);
+      this.ingredients = structuredClone(recipe?.ingredients);
     }
   }
 }

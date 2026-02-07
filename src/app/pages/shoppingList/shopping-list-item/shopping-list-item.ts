@@ -34,6 +34,6 @@ export class ShoppingListItem {
       ingredients: updateIngredient,
     };
     // update shoppinglist
-    const result = this._shoppingListStore.updateShoppingList(updatedShoppingItem);
+    const result = this._shoppingListStore.edit(updatedShoppingItem);
   }
 }
